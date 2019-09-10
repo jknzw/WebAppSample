@@ -60,18 +60,17 @@ namespace WebAppLib
             {
                 foreach (string key in parameters.Keys)
                 {
-                    switch (parameters[key])
+                    DbType dbType = DbType.String;
+
+                    if (parameters[key] is int)
                     {
-                        case null:
-                            cmd.Parameters.Add(new SQLiteParameter { ParameterName = key, Value = DBNull.Value });
-                            break;
-                        case int i:
-                            cmd.Parameters.Add(new SQLiteParameter { ParameterName = key, DbType = DbType.Int32, Value = i });
-                            break;
-                        default:
-                            cmd.Parameters.Add(new SQLiteParameter { ParameterName = key, DbType = DbType.String, Value = parameters[key].ToString() });
-                            break;
+                        dbType = DbType.Int32;
                     }
+                    if (parameters[key] == null)
+                    {
+                        parameters[key] = DBNull.Value;
+                    }
+                    cmd.Parameters.Add(new SQLiteParameter { ParameterName = key, DbType = dbType, Value = parameters[key] });
                 }
             }
         }
@@ -83,8 +82,10 @@ namespace WebAppLib
             using (SQLiteCommand cmd = new SQLiteCommand(sql, con, tran))
             {
                 SetSQLiteCommand(cmd, sql, parameters);
-                SQLiteDataAdapter adapter = new SQLiteDataAdapter(cmd);
-                int ret = adapter.Fill(dataTable);
+                using (SQLiteDataAdapter adapter = new SQLiteDataAdapter(cmd))
+                {
+                    int ret = adapter.Fill(dataTable);
+                }
             }
             return dataTable;
         }
@@ -103,17 +104,24 @@ namespace WebAppLib
             {
                 if (disposing)
                 {
-                    // TODO: マネージ状態を破棄します (マネージ オブジェクト)。
+                    // マネージ状態を破棄します (マネージ オブジェクト)。
+                    tran.Rollback();
+                    tran.Dispose();
+                    con.Close();
+                    con.Dispose();
                 }
 
-                // TODO: アンマネージ リソース (アンマネージ オブジェクト) を解放し、下のファイナライザーをオーバーライドします。
-                // TODO: 大きなフィールドを null に設定します。
+                // アンマネージ リソース (アンマネージ オブジェクト) を解放し、下のファイナライザーをオーバーライドします。
+
+                // 大きなフィールドを null に設定します。
+                tran = null;
+                con = null;
 
                 disposedValue = true;
             }
         }
 
-        // TODO: 上の Dispose(bool disposing) にアンマネージ リソースを解放するコードが含まれる場合にのみ、ファイナライザーをオーバーライドします。
+        // 上の Dispose(bool disposing) にアンマネージ リソースを解放するコードが含まれる場合にのみ、ファイナライザーをオーバーライドします。
         // ~SQLiteUtility()
         // {
         //   // このコードを変更しないでください。クリーンアップ コードを上の Dispose(bool disposing) に記述します。
@@ -125,7 +133,7 @@ namespace WebAppLib
         {
             // このコードを変更しないでください。クリーンアップ コードを上の Dispose(bool disposing) に記述します。
             Dispose(true);
-            // TODO: 上のファイナライザーがオーバーライドされる場合は、次の行のコメントを解除してください。
+            // 上のファイナライザーがオーバーライドされる場合は、次の行のコメントを解除してください。
             // GC.SuppressFinalize(this);
         }
         #endregion
