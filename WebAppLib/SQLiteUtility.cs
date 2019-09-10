@@ -1,0 +1,133 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SQLite;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WebAppLib
+{
+    public class SQLiteUtility : IDataBaseUtility
+    {
+        private SQLiteConnection con;
+        private SQLiteTransaction tran;
+
+        private readonly string dataSource = ":memory:";
+
+        public SQLiteUtility(string dataSource)
+        {
+            this.dataSource = dataSource;
+        }
+
+        public void BeginTransaction()
+        {
+            tran = con.BeginTransaction();
+        }
+
+        public void Close()
+        {
+            RollBack();
+            con.Close();
+        }
+
+        public void Commit()
+        {
+            tran.Commit();
+        }
+
+        public void Connect()
+        {
+            SQLiteConnectionStringBuilder conStrBuilder = new SQLiteConnectionStringBuilder { DataSource = dataSource };
+
+            con = new SQLiteConnection(conStrBuilder.ToString());
+            con.Open();
+        }
+
+        public int Execute(string sql, Dictionary<string, dynamic> parameters = null)
+        {
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, con, tran))
+            {
+                SetSQLiteCommand(cmd, sql, parameters);
+                return cmd.ExecuteNonQuery();
+            }
+        }
+
+        private static void SetSQLiteCommand(SQLiteCommand cmd, string sql, Dictionary<string, dynamic> parameters)
+        {
+            cmd.CommandText = sql;
+            if (parameters != null)
+            {
+                foreach (string key in parameters.Keys)
+                {
+                    switch (parameters[key])
+                    {
+                        case null:
+                            cmd.Parameters.Add(new SQLiteParameter { ParameterName = key, Value = DBNull.Value });
+                            break;
+                        case int i:
+                            cmd.Parameters.Add(new SQLiteParameter { ParameterName = key, DbType = DbType.Int32, Value = i });
+                            break;
+                        default:
+                            cmd.Parameters.Add(new SQLiteParameter { ParameterName = key, DbType = DbType.String, Value = parameters[key].ToString() });
+                            break;
+                    }
+                }
+            }
+        }
+
+        public DataTable Fill(string sql, Dictionary<string, dynamic> parameters)
+        {
+            DataTable dataTable = new DataTable();
+
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, con, tran))
+            {
+                SetSQLiteCommand(cmd, sql, parameters);
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter(cmd);
+                int ret = adapter.Fill(dataTable);
+            }
+            return dataTable;
+        }
+
+        public void RollBack()
+        {
+            tran.Rollback();
+        }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // 重複する呼び出しを検出するには
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: マネージ状態を破棄します (マネージ オブジェクト)。
+                }
+
+                // TODO: アンマネージ リソース (アンマネージ オブジェクト) を解放し、下のファイナライザーをオーバーライドします。
+                // TODO: 大きなフィールドを null に設定します。
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: 上の Dispose(bool disposing) にアンマネージ リソースを解放するコードが含まれる場合にのみ、ファイナライザーをオーバーライドします。
+        // ~SQLiteUtility()
+        // {
+        //   // このコードを変更しないでください。クリーンアップ コードを上の Dispose(bool disposing) に記述します。
+        //   Dispose(false);
+        // }
+
+        // このコードは、破棄可能なパターンを正しく実装できるように追加されました。
+        public void Dispose()
+        {
+            // このコードを変更しないでください。クリーンアップ コードを上の Dispose(bool disposing) に記述します。
+            Dispose(true);
+            // TODO: 上のファイナライザーがオーバーライドされる場合は、次の行のコメントを解除してください。
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
+    }
+}

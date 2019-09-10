@@ -30,7 +30,12 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <asp:Button ID="ButtonLogin" runat="server" Text="Login" />
+                            <asp:Button ID="ButtonLogin" runat="server" Text="Login" OnClick="ButtonLogin_Click" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                         </td>
                     </tr>
                 </table>
