@@ -25,32 +25,34 @@ namespace WebAppSample
 
                 string dataSource = Path.Combine(path, "WebApp.db");
 
-                SQLiteUtility util = new SQLiteUtility(dataSource);
-                util.Connect();
-
-                string sql = "SELECT * FROM userinfo WHERE userid = @userid";
-
-                Dictionary<string, dynamic> parameters = new Dictionary<string, dynamic>
-            {
-                {  "userid", TextBoxId.Text },
-            };
-
-                DataTable dataTable = util.Fill(sql, parameters);
-
-                if (dataTable.Rows.Count > 0)
+                using (SQLiteUtility util = new SQLiteUtility(dataSource))
                 {
-                    if (dataTable.Rows[0]["password"].ToString().Equals(TextBoxPw.Text))
+                    util.Connect();
+
+                    string sql = "SELECT * FROM userinfo WHERE userid = @userid";
+
+                    Dictionary<string, dynamic> parameters = new Dictionary<string, dynamic>
                     {
-                        LabelMessage.Text = "認証に成功しました。";
+                        {  "userid", TextBoxId.Text },
+                    };
+
+                    DataTable dataTable = util.Fill(sql, parameters);
+
+                    if (dataTable.Rows.Count > 0)
+                    {
+                        if (dataTable.Rows[0]["password"].ToString().Equals(TextBoxPw.Text))
+                        {
+                            LabelMessage.Text = "認証に成功しました。";
+                        }
+                        else
+                        {
+                            LabelMessage.Text = "パスワードが違います。";
+                        }
                     }
                     else
                     {
-                        LabelMessage.Text = "パスワードが違います。";
+                        LabelMessage.Text = "ユーザーが未登録です。";
                     }
-                }
-                else
-                {
-                    LabelMessage.Text = "ユーザーが未登録です。";
                 }
             }
             catch (Exception ex)

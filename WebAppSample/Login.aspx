@@ -25,7 +25,7 @@
                             <asp:Label ID="LabelPw" runat="server" Text="Password"></asp:Label>
                         </td>
                         <td>
-                            <asp:TextBox type="password" ID="TextBoxPw" runat="server"></asp:TextBox>
+                            <asp:TextBox TextMode="Password" ID="TextBoxPw" runat="server"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -34,9 +34,9 @@
                         </td>
                     </tr>
                 </table>
+                <asp:Label ID="LabelMessage" runat="server" Text=""></asp:Label>
             </div>
         </div>
-        <asp:Label ID="LabelMessage" runat="server" Text=""></asp:Label>
     </form>
 </body>
 </html>
