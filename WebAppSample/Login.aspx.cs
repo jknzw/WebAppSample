@@ -19,36 +19,43 @@ namespace WebAppSample
 
         protected void ButtonLogin_Click(object sender, EventArgs e)
         {
-            string path = Server.MapPath("./");
+            try
+            {
+                string path = Server.MapPath("./");
 
-            string dataSource = Path.Combine(path, "WebApp.db");
+                string dataSource = Path.Combine(path, "WebApp.db");
 
-            SQLiteUtility util = new SQLiteUtility(dataSource);
-            util.Connect();
+                SQLiteUtility util = new SQLiteUtility(dataSource);
+                util.Connect();
 
-            string sql = "SELECT * FROM userinfo WHERE userid = @userid";
+                string sql = "SELECT * FROM userinfo WHERE userid = @userid";
 
-            Dictionary<string, dynamic> parameters = new Dictionary<string, dynamic>
+                Dictionary<string, dynamic> parameters = new Dictionary<string, dynamic>
             {
                 {  "userid", TextBoxId.Text },
             };
 
-            DataTable dataTable = util.Fill(sql, parameters);
+                DataTable dataTable = util.Fill(sql, parameters);
 
-            if (dataTable.Rows.Count > 0)
-            {
-                if (dataTable.Rows[0]["password"].ToString().Equals(TextBoxPw.Text))
+                if (dataTable.Rows.Count > 0)
                 {
-                    Label1.Text = "認証に成功しました。";
+                    if (dataTable.Rows[0]["password"].ToString().Equals(TextBoxPw.Text))
+                    {
+                        Label1.Text = "認証に成功しました。";
+                    }
+                    else
+                    {
+                        Label1.Text = "パスワードが違います。";
+                    }
                 }
                 else
                 {
-                    Label1.Text = "パスワードが違います。";
+                    Label1.Text = "ユーザーが未登録です。";
                 }
             }
-            else
+            catch (Exception ex)
             {
-                Label1.Text = "ユーザーが未登録です。";
+                Label1.Text = ex.Message;
             }
         }
     }
