@@ -10,7 +10,7 @@
 <body style="height: 100%;">
     <form id="form1" runat="server" style="height: 100%;">
         <div style="height: 100%; display: flex; justify-content: center; align-items: center;">
-            <div style="display: block; text-align:center;">
+            <div style="display: block; text-align: center;">
                 <table>
                     <tr>
                         <td>
@@ -33,14 +33,10 @@
                             <asp:Button ID="ButtonLogin" runat="server" Text="Login" OnClick="ButtonLogin_Click" />
                         </td>
                     </tr>
-                    <tr>
-                        <td colspan="2">
-                            <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
-                        </td>
-                    </tr>
                 </table>
             </div>
         </div>
+        <asp:Label ID="LabelMessage" runat="server" Text=""></asp:Label>
     </form>
 </body>
 </html>

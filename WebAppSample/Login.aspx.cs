@@ -41,21 +41,21 @@ namespace WebAppSample
                 {
                     if (dataTable.Rows[0]["password"].ToString().Equals(TextBoxPw.Text))
                     {
-                        Label1.Text = "認証に成功しました。";
+                        LabelMessage.Text = "認証に成功しました。";
                     }
                     else
                     {
-                        Label1.Text = "パスワードが違います。";
+                        LabelMessage.Text = "パスワードが違います。";
                     }
                 }
                 else
                 {
-                    Label1.Text = "ユーザーが未登録です。";
+                    LabelMessage.Text = "ユーザーが未登録です。";
                 }
             }
             catch (Exception ex)
             {
-                Label1.Text = ex.Message;
+                LabelMessage.Text = ex.Message;
             }
         }
     }
