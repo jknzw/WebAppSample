@@ -105,10 +105,10 @@ namespace WebAppLib
                 if (disposing)
                 {
                     // マネージ状態を破棄します (マネージ オブジェクト)。
-                    tran.Rollback();
-                    tran.Dispose();
-                    con.Close();
-                    con.Dispose();
+                    tran?.Rollback();
+                    tran?.Dispose();
+                    con?.Close();
+                    con?.Dispose();
                 }
 
                 // アンマネージ リソース (アンマネージ オブジェクト) を解放し、下のファイナライザーをオーバーライドします。
