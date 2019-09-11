@@ -34,7 +34,7 @@
                         </td>
                     </tr>
                 </table>
-                <asp:Label ID="LabelMessage" runat="server" Text=""></asp:Label>
+                <asp:Label ID="LabelMessage" runat="server" Text="" style="display:block; min-height:20px;"></asp:Label>
             </div>
         </div>
     </form>

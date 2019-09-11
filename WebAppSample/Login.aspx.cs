@@ -31,9 +31,11 @@ namespace WebAppSample
 
                     string sql = "SELECT * FROM userinfo WHERE userid = @userid";
 
+                    string userid = TextBoxId.Text;
+
                     Dictionary<string, dynamic> parameters = new Dictionary<string, dynamic>
                     {
-                        {  "userid", TextBoxId.Text },
+                        {  "userid", userid },
                     };
 
                     DataTable dataTable = util.Fill(sql, parameters);
@@ -43,6 +45,13 @@ namespace WebAppSample
                         if (dataTable.Rows[0]["password"].ToString().Equals(TextBoxPw.Text))
                         {
                             LabelMessage.Text = "認証に成功しました。";
+
+                            SessionManager.UserInfo userInfo = new SessionManager.UserInfo(Session)
+                            {
+                                UserId = userid,
+                            };
+
+                            Server.Transfer("~/ToDo.aspx", true);
                         }
                         else
                         {
