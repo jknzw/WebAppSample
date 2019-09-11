@@ -281,8 +281,7 @@ namespace WebAppLib
                                 // キューが無くなるまで書き込む
                                 while (_que.Count > 0)
                                 {
-                                    string item;
-                                    if (_que.TryTake(out item, 1 * 1000))
+                                    if (_que.TryTake(out string item, 1 * 1000))
                                     {
                                         // 書き終わるまで処理を待つ
                                         await sw.WriteLineAsync(item);
