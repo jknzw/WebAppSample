@@ -8,22 +8,41 @@
     <title>Vue ToDo List</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <style>
-        table{
-            border:2px solid #BBBBBB;
+        table {
+            border: 2px solid #BBBBBB;
             border-collapse: collapse;
         }
-        td{
+
+        td {
             border: 1px solid #BBBBBB;
             text-align: center;
         }
+
         thead tr td {
             font-weight: bold;
         }
-        .todo{
+
+        .todo {
             text-align: left;
         }
-        .completeTasks{
+
+        .completeTasks {
             background: #AAAAAA;
+        }
+
+        .checkbox input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkbox label {
+            display:inline-block;
+            color:#fff;
+            background-color:#2780e3;
+            padding:5px 10px;
+        }
+
+        .checkbox:checked + label {
+            background-color:#000;
         }
     </style>
 </head>
@@ -42,43 +61,23 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!-- 未着手時 start -->
-                <tr v-for="todo in list" v-if="todo.flag === true">
-                    <td>
-                        <button @click="changeToDo(todo.id)" onclick="return false;">作業完了</button>
-                    </td>
-                    <td>
-                        <div v-bind:name="'id' + todo.id">{{ todo.id }}</div>
-                    </td>
-                    <td class="todo">
-                        <div v-bind:name="'text' + todo.id">{{ todo.text }}</div>
-                        <!-- 0:未着手 -->
-                        <div style="display:none;" v-bind:name="'status' + todo.id">0</div>
-                    </td>
-                    <td>
-                        <button @click="deleteToDo(todo.id)"  onclick="return false;">削除</button>
-                        <button @click="editToDo(todo.id)"  onclick="return false;">更新</button>
-                    </td>
-                </tr>
-                <!-- 未着手時 end -->
-                <!-- 作業完了時 start -->
-                <tr v-for="todo in list" v-if="todo.flag === false" class="completeTasks">
-                    <td>
-                        <button @click="changeToDo(todo.id)" onclick="return false;">戻す</button>
-                    </td>
-                    <td>
-                        <div v-bind:name="'id' + todo.id">{{ todo.id }}</div>
-                    </td>
-                    <td class="todo">
-                        <div v-bind:name="'text' + todo.id">{{ todo.text }}</div>
-                        <!-- 1:完了 -->
-                        <div style="display:none;" v-bind:name="'status' + todo.id">1</div>
-                    </td>
-                    <td>
-                        <button @click="deleteToDo(todo.id)" onclick="return false;">削除</button>
-                    </td>
-                </tr>
-                <!-- 作業完了時 end -->
+                    <tr v-for="todo in list" v-bind:class="{'completeTasks' : todo.flag === false}">
+                        <td class="checkbox">
+                            <input type="checkbox" v-bind:id="'bar'+todo.id" @click="changeToDo(todo.id)" onclick="return false;" />
+                            <label v-bind:for="'bar'+todo.id" v-if="todo.flag">未着手</label>
+                            <label v-bind:for="'bar'+todo.id" v-else="todo.flag">完了</label>
+                        </td>
+                        <td>
+                            <div v-bind:name="'id' + todo.id">{{ todo.id }}</div>
+                        </td>
+                        <td class="todo">
+                            <div v-bind:name="'text' + todo.id">{{ todo.text }}</div>
+                        </td>
+                        <td>
+                            <button @click="editToDo(todo.id)" v-if="todo.flag"  onclick="return false;">更新</button>
+                            <button @click="deleteToDo(todo.id)"  onclick="return false;">削除</button>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
