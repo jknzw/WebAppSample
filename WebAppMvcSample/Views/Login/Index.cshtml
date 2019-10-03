@@ -1,0 +1,34 @@
+﻿@model WebAppMvcSample.Models.LoginModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+<div>
+    <table>
+        <tr>
+            <td>
+                @Model.LableUserId
+            </td>
+            <td>
+                <input type="text" value="@Model.UserId" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Model.LablePassword
+            </td>
+            <td>
+                <input type="password" value="@Model.Password" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="@Model.LableLoginButton" />
+            </td>
+        </tr>
+    </table>
+    <div>
+    </div>
+</div>

@@ -11,16 +11,21 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            SQLiteUtility util = new SQLiteUtility("ConsolApp.db");
-            util.Connect();
+            if(args == null)
+            {
 
-            string sql = "CREATE TABLE IF NOT EXISTS decimal_table(" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "decimal REAL)";
+            }
+            using (SQLiteUtility util = new SQLiteUtility("ConsolApp.db"))
+            {
+                util.Connect();
 
-            util.Execute(sql);
+                string sql = "CREATE TABLE IF NOT EXISTS decimal_table(" +
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "decimal REAL)";
 
+                util.Execute(sql);
 
+            }
         }
     }
 }
