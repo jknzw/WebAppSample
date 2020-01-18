@@ -10,7 +10,7 @@
 namespace WebAppSample {
     
     
-    public partial class ToDo1 {
+    public partial class ToDo {
         
         /// <summary>
         /// form1 コントロール。
@@ -20,14 +20,5 @@ namespace WebAppSample {
         /// 変更するには、フィールドの宣言をデザイナー ファイルから分離コード ファイルに移動します。
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
-        /// <summary>
-        /// MainRepeater コントロール。
-        /// </summary>
-        /// <remarks>
-        /// 自動生成されたフィールド。
-        /// 変更するには、フィールドの宣言をデザイナー ファイルから分離コード ファイルに移動します。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater MainRepeater;
     }
 }

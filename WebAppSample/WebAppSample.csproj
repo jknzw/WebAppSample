@@ -74,15 +74,36 @@
   <ItemGroup>
     <Content Include="bin\x64\SQLite.Interop.dll" />
     <Content Include="bin\x86\SQLite.Interop.dll" />
+    <Content Include="css\todo.css" />
+    <Content Include="FrmYogoList.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Kotsuhi.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="Menu.aspx" />
+    <Content Include="SampleTable.aspx" />
     <Content Include="ToDo.aspx" />
+    <Content Include="VueTest.aspx" />
     <Content Include="js\ToDo.js" />
     <Content Include="Web.config" />
+    <Content Include="Kintai.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrmYogoList.aspx.cs">
+      <DependentUpon>FrmYogoList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FrmYogoList.aspx.designer.cs">
+      <DependentUpon>FrmYogoList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Kotsuhi.aspx.cs">
+      <DependentUpon>Kotsuhi.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Kotsuhi.aspx.designer.cs">
+      <DependentUpon>Kotsuhi.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -91,7 +112,21 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Menu.aspx.cs">
+      <DependentUpon>Menu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Menu.aspx.designer.cs">
+      <DependentUpon>Menu.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SampleTable.aspx.cs">
+      <DependentUpon>SampleTable.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SampleTable.aspx.designer.cs">
+      <DependentUpon>SampleTable.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SessionManager.cs" />
     <Compile Include="ToDo.aspx.cs">
       <DependentUpon>ToDo.aspx</DependentUpon>
@@ -99,6 +134,20 @@
     </Compile>
     <Compile Include="ToDo.aspx.designer.cs">
       <DependentUpon>ToDo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VueTest.aspx.cs">
+      <DependentUpon>VueTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VueTest.aspx.designer.cs">
+      <DependentUpon>VueTest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Kintai.aspx.cs">
+      <DependentUpon>Kintai.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Kintai.aspx.designer.cs">
+      <DependentUpon>Kintai.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -16,6 +16,10 @@ namespace WebAppSample
         {
 
         }
+        protected void ButtonInsert_Click(object sender, EventArgs e)
+        {
+
+        }
 
         protected void ButtonLogin_Click(object sender, EventArgs e)
         {

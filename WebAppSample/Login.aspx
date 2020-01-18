@@ -14,7 +14,7 @@
                 <table>
                     <tr>
                         <td>
-                            <asp:Label ID="LabelId" runat="server" Text="User Id"></asp:Label>
+                            <asp:Label ID="LabelId" runat="server" Text="ユーザーID"></asp:Label>
                         </td>
                         <td>
                             <asp:TextBox ID="TextBoxId" runat="server"></asp:TextBox>
@@ -22,7 +22,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <asp:Label ID="LabelPw" runat="server" Text="Password"></asp:Label>
+                            <asp:Label ID="LabelPw" runat="server" Text="パスワード"></asp:Label>
                         </td>
                         <td>
                             <asp:TextBox TextMode="Password" ID="TextBoxPw" runat="server"></asp:TextBox>
@@ -30,7 +30,8 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <asp:Button ID="ButtonLogin" runat="server" Text="Login" OnClick="ButtonLogin_Click" />
+                            <asp:Button ID="ButtonLogin" runat="server" Text="ログイン" OnClick="ButtonLogin_Click" style="margin-left: 71px; margin-right: 13px" Width="110px" />
+                            <asp:Button ID="ButtonInsert" runat="server" Text="新規登録" OnClick="ButtonInsert_Click" style="margin-left: 71px; margin-right: 13px" Width="110px" />
                         </td>
                     </tr>
                 </table>

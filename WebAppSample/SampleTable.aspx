@@ -10,6 +10,18 @@
 <body>
 	<form id="form1" runat="server">
 		<div>
+			<asp:TextBox ID="TextBoxMultiLine" runat="server" TextMode="MultiLine" ReadOnly="true"></asp:TextBox>
+		</div>
+		<div>
+			<asp:Repeater ID="RepeaterMessage" runat="server">
+				<ItemTemplate>
+					<div>
+						<asp:Label ID="LblMsg" runat="server" Text='<%# Container.DataItem %>' />
+					</div>
+				</ItemTemplate>
+			</asp:Repeater>
+		</div>
+		<div>
 			<asp:Repeater ID="Repeater1" runat="server">
 				<HeaderTemplate>
 					<table style="border:1px solid black; border-collapse:collapse;">

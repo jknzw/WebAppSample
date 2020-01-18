@@ -23,8 +23,21 @@ namespace WebAppSample
 				dt.Rows.Add(row);
 
 				row = dt.NewRow();
-				row["Name"] = "LogOut";
+				row["Name"] = "Web勤怠表";
 				dt.Rows.Add(row);
+
+				row = dt.NewRow();
+				row["Name"] = "交通費精算";
+				dt.Rows.Add(row);
+
+				row = dt.NewRow();
+				row["Name"] = "用語集";
+				dt.Rows.Add(row);
+
+				row = dt.NewRow();
+				row["Name"] = "ログアウト";
+				dt.Rows.Add(row);
+
 
 				Repeater1.DataSource = dt;
 				Repeater1.DataBind();
@@ -42,6 +55,21 @@ namespace WebAppSample
 				case "ToDo":
 					Server.Transfer("~/ToDo.aspx", true);
 					break;
+				case "Web勤怠表":
+					Server.Transfer("~/Kintai.aspx", true);
+					break;
+				case "交通費精算":
+					Server.Transfer("~/Kotsuhi.aspx", true);
+					break;
+				case "用語集":
+					Server.Transfer("~/FrmYogoList.aspx", true);
+					break;
+				case "電卓":
+                    Server.Transfer("~/ToDo.aspx", true);
+                    break;
+                case "王-1GP申請":
+                    Server.Transfer("~/ToDo.aspx", true);
+                    break;
 				default:
 					Server.Transfer("~/Login.aspx", true);
 					break;

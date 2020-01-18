@@ -20,7 +20,7 @@
 				<ItemTemplate>
 					<tr>
 						<td>
-							<asp:Button ID="Button1" runat="server" Text='<%# Eval("Name") %>' OnClick="Button1_Click" />
+							<asp:Button ID="Button1" runat="server" Text='<%# Eval("Name") %>' OnClick="Button1_Click" style="min-width:150px;" />
 						</td>
 					</tr>
 				</ItemTemplate>

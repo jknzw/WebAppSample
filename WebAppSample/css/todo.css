@@ -1,0 +1,74 @@
+/* TODO.  */
+.body-content {
+    position: relative; /* センタリング.  */
+}
+
+.body-content {
+    width: 100%;
+    /* センタリング.  */
+    position: absolute;
+    /* top: 50%;
+    bottom: 50%; */
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%, 0em);
+    margin: auto;
+}
+
+.body-content .function-buttons {
+        left: 5%;
+        width: 90%;
+        margin: auto;
+}
+
+main.todo div.main-division div.data-contents {
+    width: 100%;
+    position: relative; /* センタリング.  */
+}
+
+.todo-table {
+    width: 90%;
+    /* センタリング.  */
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%, 1em);
+    margin: auto;
+}
+
+.todo-table thead {
+    background-color: green;
+}
+
+.todo-table,
+.todo-table th,
+.todo-table td {
+    border: 1px black solid; /* 枠線.  */
+    border-collapse: collapse; /* 二重線を消す.  */
+}
+
+.todo-table tbody td input,
+.todo-table tbody td button {
+        margin: 1%;
+        width: 98%;
+}
+
+.todo-table tbody td.status {
+        text-align: center;
+}
+
+.status-input {
+    width: 100%;
+}
+
+.todo-input {
+    width: 100%;
+}
+
+.doing-input {
+    width: 100%;
+}
+
+.delete-button {
+    width: 100%;
+}
