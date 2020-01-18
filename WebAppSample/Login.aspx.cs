@@ -51,7 +51,7 @@ namespace WebAppSample
                                 UserId = userid,
                             };
 
-                            Server.Transfer("~/ToDo.aspx", true);
+                            Server.Transfer("~/Menu.aspx", true);
                         }
                         else
                         {
