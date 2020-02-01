@@ -31,19 +31,47 @@
 			<asp:ListItem Selected="True">往復</asp:ListItem>
 			<asp:ListItem>片道</asp:ListItem>
 		</asp:DropDownList>
-		<asp:Button ID="cmdToroku" runat="server" Text="登録" OnClick="CmdToroku_Click" />
+		<asp:Button ID="cmdToroku" runat="server" Text="登録" OnClick="cmdToroku_Click" />
 		<br />
 		<br />
 		<asp:Label ID="Label6" runat="server" Text="年月"></asp:Label>
 		<asp:TextBox ID="txtNengetsu" runat="server"></asp:TextBox>
-		<asp:Button ID="cmdShow" runat="server" Text="表示" />
+		<asp:Button ID="cmdShow" runat="server" Text="表示" OnClick="cmdShow_Click" />
 		<asp:Label ID="Label7" runat="server" Text="合計"></asp:Label>
 		<asp:Label ID="Label8" runat="server" Text="金額"></asp:Label>
 		<asp:Label ID="Label10" runat="server" Text="円"></asp:Label>
-		<asp:GridView ID="GridView1" runat="server" style="margin-top: 2px">
-			<Columns>
-			</Columns>
-		</asp:GridView>
+		<table>
+			<tr>
+				<td>No.</td>
+				<td>日付</td>
+				<td>曜日</td>
+				<td>交通機関</td>
+				<td colspan="3">駅名</td>
+				<td>片道金額</td>
+				<td></td>
+				<td>金額</td>
+				<td></td>
+			</tr>
+			<asp:Repeater ID="MeisaiData" runat ="server">
+				<ItemTemplate>
+                    <tr>
+                        <td><%# Container.ItemIndex + 1 %></td>
+                        <td><%# Eval("target_date") %></td>
+                        <td><%# Eval("day") %></td>
+                        <td><%# Eval("transport") %></td>
+                        <td><%# Eval("station_from") %></td>
+						<td><%# Eval("station_nyoro") %></td>
+                        <td><%# Eval("station_to") %></td>
+                        <td><%# Eval("oneway_cost") %></td>
+                        <td><%# Eval("ido_kbn") %></td>
+                        <td><%# Eval("cost") %></td>
+						<td><%# Eval("data_id") %></td>
+                        <td><button type="button" name="del" value="<%# DataBinder.Eval(Container, "ItemIndex") %>">削除</button></td>
+                    </tr>
+                </ItemTemplate>
+
+			</asp:Repeater>
+		</table>
     </form>
 </body>
 </html>

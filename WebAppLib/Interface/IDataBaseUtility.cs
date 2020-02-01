@@ -11,14 +11,16 @@ namespace WebAppLib
 
         void BeginTransaction();
 
-        DataTable Fill(string sql, Dictionary<string, dynamic> parameters);
+		void RollBack();
+
+		void Commit();
+
+		DataTable Fill(string sql);
+
+		DataTable Fill(string sql, Dictionary<string, dynamic> parameters);
 
         int Execute(string sql, Dictionary<string, dynamic> parameters);
 
-        void Commit();
-
-        void RollBack();
-
-        void Close();
+		void Close();
     }
 }

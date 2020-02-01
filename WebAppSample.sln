@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppLib", "WebAppLib\WebA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{F4A37BC0-6B36-4381-92E3-0C8795C111E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppMvcSample", "WebAppMvcSample\WebAppMvcSample.csproj", "{C68F4574-ABDD-4C20-BADA-202C772F4C44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppMvcSample", "WebAppMvcSample\WebAppMvcSample.csproj", "{C68F4574-ABDD-4C20-BADA-202C772F4C44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

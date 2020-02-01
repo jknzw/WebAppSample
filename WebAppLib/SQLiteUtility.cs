@@ -24,16 +24,19 @@ namespace WebAppLib
         {
             tran = con.BeginTransaction();
         }
+		public void RollBack()
+		{
+			tran.Rollback();
+		}
+		public void Commit()
+		{
+			tran.Commit();
+		}
 
-        public void Close()
+		public void Close()
         {
             RollBack();
             con.Close();
-        }
-
-        public void Commit()
-        {
-            tran.Commit();
         }
 
         public void Connect()
@@ -103,11 +106,6 @@ namespace WebAppLib
                 }
             }
             return dataTable;
-        }
-
-        public void RollBack()
-        {
-            tran.Rollback();
         }
 
         #region IDisposable Support

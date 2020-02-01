@@ -67,6 +67,15 @@ namespace WebAppSample {
         protected global::System.Web.UI.WebControls.Button ButtonLogin;
         
         /// <summary>
+        /// ButtonInsert コントロール。
+        /// </summary>
+        /// <remarks>
+        /// 自動生成されたフィールド。
+        /// 変更するには、フィールドの宣言をデザイナー ファイルから分離コード ファイルに移動します。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonInsert;
+        
+        /// <summary>
         /// LabelMessage コントロール。
         /// </summary>
         /// <remarks>
@@ -74,5 +83,14 @@ namespace WebAppSample {
         /// 変更するには、フィールドの宣言をデザイナー ファイルから分離コード ファイルに移動します。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LabelMessage;
+        
+        /// <summary>
+        /// WebFooterControl1 コントロール。
+        /// </summary>
+        /// <remarks>
+        /// 自動生成されたフィールド。
+        /// 変更するには、フィールドの宣言をデザイナー ファイルから分離コード ファイルに移動します。
+        /// </remarks>
+        protected global::WebCustomControl.WebFooterControl WebFooterControl1;
     }
 }

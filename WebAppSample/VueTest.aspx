@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="VueTest.aspx.cs" Inherits="WebAppSample.ToDo" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="VueTest.aspx.cs" Inherits="WebAppSample.VueTest" %>
 
 <!DOCTYPE html>
 
@@ -82,6 +82,6 @@
             </table>
         </div>
     </form>
-    <script src="js/ToDo.js"></script>
+    <script src="js/VueTest.js"></script>
 </body>
 </html>

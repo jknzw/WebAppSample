@@ -1,5 +1,9 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="WebAppSample.Login" %>
 
+<%@ Register Src="~/custom/WebFooterControl.ascx" TagPrefix="uc1" TagName="WebFooterControl" %>
+
+
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" style="height: 95%;">
@@ -38,6 +42,7 @@
                 <asp:Label ID="LabelMessage" runat="server" Text="" style="display:block; min-height:20px;"></asp:Label>
             </div>
         </div>
+		<uc1:WebFooterControl runat="server" ID="WebFooterControl1" />
     </form>
 </body>
 </html>

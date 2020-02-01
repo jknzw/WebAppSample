@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ToDo.aspx.cs" Inherits="WebAppSample.ToDo1" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ToDo.aspx.cs" Inherits="WebAppSample.ToDo1" EnableEventValidation="false"  %>
 
 <!DOCTYPE html>
 
@@ -7,6 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
 	<link href="css/todo.css" rel="stylesheet" />
+	<script type="text/javascript" src="./js/jquery.js"></script>
+	<script type="text/javascript" src="./js/ToDo.js"></script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -15,10 +17,10 @@
 					<table class="todo-table">
 						<thead>
                         <tr>
-                            <th class="status">状態</th>
-                            <th class="task">タスク</th>
-                            <th class="remarks">備考</th>
-                            <th class="delete">削除</th>
+                            <th>状態</th>
+                            <th>タスク</th>
+                            <th>備考</th>
+                            <th>削除</th>
                         </tr>
 						</thead>
 						<tbody>
@@ -26,18 +28,17 @@
 				<ItemTemplate>
 					<tr>
 						<td class="status">
-							<asp:TextBox ID="StatusBox" runat="server" CssClass="status-input" Text='<%# Eval("StatusBox") %>'></asp:TextBox>
+							<asp:TextBox ID="StatusBox" runat="server" CommandArgument='<%# Eval("Id") %>' Text='<%# Eval("StatusBox") %>' readonly/>
 						</td>
 						<td class="todo">
-							<asp:TextBox ID="TaskBox" runat="server" CssClass="todo-input" Text='<%# Eval("TaskBox") %>'></asp:TextBox>
+							<asp:TextBox ID="TaskBox" runat="server" CommandArgument='<%# Eval("Id") %>' Text='<%# Eval("TaskBox") %>' readonly/>
 						</td>
 						<td class="doing">
-							<asp:TextBox ID="RemarksBox" runat="server" CssClass="doing-input" Text='<%# Eval("RemarksBox") %>'></asp:TextBox>
+							<asp:TextBox ID="RemarksBox" runat="server" CommandArgument='<%# Eval("Id") %>' Text='<%# Eval("RemarksBox") %>' readonly/>
 						</td>
 						<td class="delete">
-							<asp:Button ID="DeleteButton"  runat="server" CssClass="delete-button" Text='<%# Eval("DeleteButton") %>' />
+							<asp:Button ID="EditButton" runat="server" CommandArgument='<%# Eval("Id") %>' CssClass="edit-button" Text='編集' OnClick="EditButton_Click"/>
 						</td>
-						
 					</tr>
 				</ItemTemplate>
 				<FooterTemplate>

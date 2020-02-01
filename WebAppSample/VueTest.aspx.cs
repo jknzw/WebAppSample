@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace WebAppSample
 {
-    public partial class ToDo : System.Web.UI.Page
+    public partial class VueTest : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <style>
-        p {
+        p{
             background-color: lightskyblue;
         }
     </style>
@@ -47,7 +47,7 @@
                 </tr>
             </table>
             <div style="display: block; text-align: center;">
-                <asp:Button ID="btnInsert" runat="server" Text="登録" />
+                <asp:Button ID="btnInsert" runat="server" Text="登録" OnClick="btnInsert_Click" />
             </div>
             <br />
             <br />
@@ -57,24 +57,16 @@
                         <thead>
                             <tr>
                                 <th>
-                                    <p>
                                         <asp:Label ID="lblNo" runat="server" Text="Label">No.</asp:Label>
-                                    </p>
                                 </th>
                                 <th>
-                                    <p>
                                         <asp:Label ID="lblName" runat="server" Text="Label">名称</asp:Label>
-                                    </p>
                                 </th>
                                 <th>
-                                    <p>
                                         <asp:Label ID="lblBiko" runat="server" Text="Label">備考</asp:Label>
-                                    </p>
                                 </th>
                                 <th>
-                                    <p>
                                         <asp:Label ID="lblUrl" runat="server" Text="Label">URL</asp:Label>
-                                    </p>
                                 </th>
                                 <th colspan="2"></th>
                             </tr>
@@ -84,22 +76,22 @@
                 <ItemTemplate>
                     <tr>
                         <td style="border: 1px solid black;">
-                            <asp:TextBox ID="TextBox1" runat="server" Text='<%# Eval("No") %>'></asp:TextBox>
+                            <asp:label ID="TextBox1" runat="server" Text='<%# Container.ItemIndex + 1 %>'></asp:label>
                         </td>
                         <td style="border: 1px solid black;">
-                            <asp:TextBox ID="TextBox2" runat="server" Text='<%# Eval("名称") %>'></asp:TextBox>
+                            <asp:TextBox ID="TextBox2" runat="server" Text='<%# Eval("name") %>'></asp:TextBox>
                         </td>
                         <td style="border: 1px solid black;">
-                            <asp:TextBox ID="TextBox3" runat="server" Text='<%# Eval("備考") %>'></asp:TextBox>
+                            <asp:TextBox ID="TextBox3" runat="server" Text='<%# Eval("biko") %>'></asp:TextBox>
                         </td>
                         <td style="border: 1px solid black;">
-                            <asp:TextBox ID="TextBox4" runat="server" Text='<%# Eval("URL") %>'></asp:TextBox>
+                            <asp:TextBox ID="TextBox4" runat="server" Text='<%# Eval("url") %>'></asp:TextBox>
                         </td>
                         <td style="border: 1px solid black;">
-                            <asp:Button ID="btnUpd" runat="server" Text="更新" />
+                            <asp:Button ID="btnUpd" runat="server" Text="更新" OnClick="btnUpd_Click" value="<%# Container.ItemIndex %>" />
                         </td>
                         <td style="border: 1px solid black;">
-                            <asp:Button ID="btnDel" runat="server" Text="削除" />
+                            <asp:Button ID="btnDel" runat="server" Text="削除" OnClick="btnDel_Click" />
                         </td>
                     </tr>
                 </ItemTemplate>
@@ -108,6 +100,8 @@
 					</table>
                 </FooterTemplate>
             </asp:Repeater>
+            <br />
+                <asp:Label ID="LabelMessage" runat="server" Text="" style="display:block; min-height:20px;"></asp:Label>
         </div>
     </form>
 </body>

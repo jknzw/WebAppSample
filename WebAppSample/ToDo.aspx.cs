@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using WebAppLib;
 
 namespace WebAppSample
 {
@@ -12,21 +14,27 @@ namespace WebAppSample
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			DataTable table = new DataTable();
-			table.Columns.Add("StatusBox");
-			table.Columns.Add("TaskBox");
-			table.Columns.Add("RemarksBox");
-			table.Columns.Add("DeleteButton");
+			string path = Server.MapPath("./sqlite/");
+			string dataSource = Path.Combine(path, "todo.db");
 
-			DataRow row = table.NewRow();
-			row["StatusBox"] = "未着手";
-			row["TaskBox"] = "帳票作成";
-			row["RemarksBox"] = "税改正対応";
-			row["DeleteButton"] = "削除";
-			table.Rows.Add(row);
+			using (SQLiteUtility util = new SQLiteUtility(dataSource))
+			{
+				util.Connect();
 
-			MainRepeater.DataSource = table;
-			MainRepeater.DataBind();
+				string sql = "SELECT * FROM Todo";
+				Dictionary<string, dynamic> parameters = null;
+
+				DataTable table = util.Fill(sql, parameters);
+
+				MainRepeater.DataSource = table;
+				MainRepeater.DataBind();
+			}
+		}
+
+		protected void EditButton_Click(object sender, EventArgs e)
+		{
+			string id = ((Button)sender).CommandArgument;
+
 		}
 	}
 }

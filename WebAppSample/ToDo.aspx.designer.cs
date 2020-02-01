@@ -7,11 +7,13 @@
 // </自動生成>
 //------------------------------------------------------------------------------
 
-namespace WebAppSample {
-    
-    
-    public partial class ToDo1 {
-        
+namespace WebAppSample
+{
+
+
+    public partial class ToDo1
+    {
+
         /// <summary>
         /// form1 コントロール。
         /// </summary>
@@ -20,7 +22,7 @@ namespace WebAppSample {
         /// 変更するには、フィールドの宣言をデザイナー ファイルから分離コード ファイルに移動します。
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
+
         /// <summary>
         /// MainRepeater コントロール。
         /// </summary>

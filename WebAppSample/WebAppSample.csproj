@@ -32,7 +32,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>6</LangVersion>
+    <LangVersion>7.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +42,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -75,6 +76,8 @@
     <Content Include="bin\x64\SQLite.Interop.dll" />
     <Content Include="bin\x86\SQLite.Interop.dll" />
     <Content Include="css\todo.css" />
+    <Content Include="custom\WebFooterControl.ascx" />
+    <Content Include="Dentaku.aspx" />
     <Content Include="FrmYogoList.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Kotsuhi.aspx" />
@@ -83,11 +86,25 @@
     <Content Include="SampleTable.aspx" />
     <Content Include="ToDo.aspx" />
     <Content Include="VueTest.aspx" />
-    <Content Include="js\ToDo.js" />
+    <Content Include="js\VueTest.js" />
     <Content Include="Web.config" />
     <Content Include="Kintai.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="custom\WebFooterControl.ascx.cs">
+      <DependentUpon>WebFooterControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="custom\WebFooterControl.ascx.designer.cs">
+      <DependentUpon>WebFooterControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Dentaku.aspx.cs">
+      <DependentUpon>Dentaku.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Dentaku.aspx.designer.cs">
+      <DependentUpon>Dentaku.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FrmYogoList.aspx.cs">
       <DependentUpon>FrmYogoList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -154,6 +171,10 @@
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\puriko - Web Deploy.pubxml" />
     <Content Include="sqlite\main.db" />
+    <Content Include="sqlite\Dentaku.db" />
+    <Content Include="sqlite\Kotsuhi.db" />
+    <Content Include="sqlite\todo.db" />
+    <Content Include="sqlite\yougo.db" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using WebAppLib;
+using WebAppSample;
 
 namespace YogoList
 {
@@ -12,36 +15,101 @@ namespace YogoList
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string name = "名称";
-            string biko = "備考";
-            string url = "URL";
-
-            txtNameItem.Text = name;
-            txtBikoItem.Text = biko;
-            txtUrlItem.Text = url;
-
-            DataTable table = new DataTable();
-
-            table.Columns.Add("No");
-            table.Columns.Add("名称");
-            table.Columns.Add("備考");
-            table.Columns.Add("URL");
-
-            for (int i = 0; i < 3; i++)
+            try
             {
-                DataRow row = table.NewRow();
+                string path = Server.MapPath("./sqlite/");
 
-                row["No"] = i + 1;
-                row["名称"] = name + i + 1;
-                row["備考"] = biko + i + 1;
-                row["URL"] = url + i + 1;
+                string dataSource = Path.Combine(path, "yougo.db");
 
-                table.Rows.Add(row);
+                using (SQLiteUtility util = new SQLiteUtility(dataSource))
+                {
+                    util.Connect();
+
+                    string sql = "SELECT * FROM  yougo";
+
+                    string name = this.txtNameItem.Text;
+                    string biko = this.txtBikoItem.Text;
+                    string url = this.txtUrlItem.Text;
+
+                    Dictionary<string, dynamic> parameters = new Dictionary<string, dynamic>
+                    {
+                        {"name",name },
+                        {"biko",biko },
+                        {"url",url },
+                    };
+
+                    DataTable dataTable = util.Fill(sql, parameters);
+
+                    if (dataTable.Rows.Count > 0)
+                    {
+                        Repeater1.DataSource = dataTable;
+                        Repeater1.DataBind();
+                    }
+                }
             }
+            catch (Exception ex)
+            {
+                this.LabelMessage.Text = ex.Message;
+            }
+        }
 
-            Repeater1.DataSource = table;
-            Repeater1.DataBind();
+        protected void btnInsert_Click(object sender, EventArgs e)
+        {
+            try
+            {
+              string path = Server.MapPath("./sqlite/");
 
+                string dataSource = Path.Combine(path, "yougo.db");
+
+                using (SQLiteUtility util = new SQLiteUtility(dataSource))
+                {
+                    util.Connect();
+
+                    string sql = "INSERT INTO yougo VALUES(\"\",\"\",@name,@biko,@URL);";
+
+                    string name = this.txtNameItem.Text;
+                    string biko = this.txtBikoItem.Text;
+                    string url = this.txtUrlItem.Text;
+
+                    Dictionary<string, dynamic> parameters = new Dictionary<string, dynamic>
+                            {
+                                {"name",name },
+                                {"biko",biko },
+                                {"url",url },
+                            };
+
+                    util.Execute(sql, parameters);
+
+                    sql = "SELECT * FROM  yougo";
+                    DataTable dataTable = util.Fill(sql);
+
+                    if (dataTable.Rows.Count > 0)
+                    {
+                        Repeater1.DataSource = dataTable;
+                        Repeater1.DataBind();
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                var  aaa = ex;
+            }
+        }
+        protected void btnUpd_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+            }
+                    catch (Exception ex)
+            {
+                this.LabelMessage.Text = ex.Message;
+            }
+        }
+        protected void btnDel_Click(object sender, EventArgs e)
+        {
         }
     }
 }
+
+      

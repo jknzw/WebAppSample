@@ -60,7 +60,7 @@ namespace WebAppLib
 
             public Task<IDisposable> LockAsync()
             {
-                var wait = m_semaphore.WaitAsync();
+				Task wait = m_semaphore.WaitAsync();
                 return wait.IsCompleted ?
                         m_releaser :
                         wait.ContinueWith(

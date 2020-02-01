@@ -1,5 +1,8 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Menu.aspx.cs" Inherits="WebAppSample.Menu" %>
 
+<%@ Register Src="~/custom/WebFooterControl.ascx" TagPrefix="uc1" TagName="WebFooterControl" %>
+
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -29,6 +32,7 @@
 				</FooterTemplate>
 			</asp:Repeater>
 		</div>
+		<uc1:WebFooterControl runat="server" ID="WebFooterControl" />
 	</form>
 </body>
 </html>

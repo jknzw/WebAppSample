@@ -88,6 +88,11 @@ namespace WebAppLib
             return command;
         }
 
+		public DataTable Fill(string sql)
+		{
+			return Fill(sql, null);
+		}
+
         public DataTable Fill(string sql, Dictionary<string, dynamic> parameters)
         {
             logger.StartMethod(MethodBase.GetCurrentMethod().Name);
