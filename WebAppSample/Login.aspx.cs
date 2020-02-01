@@ -25,7 +25,7 @@ namespace WebAppSample
         {
             try
             {
-                string path = Server.MapPath("./");
+                string path = Server.MapPath("./sqlite/");
 
                 string dataSource = Path.Combine(path, "WebApp.db");
 

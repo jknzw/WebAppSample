@@ -153,13 +153,14 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\puriko - Web Deploy.pubxml" />
+    <Content Include="sqlite\main.db" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <Content Include="WebApp.db" />
+    <Content Include="sqlite\WebApp.db" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

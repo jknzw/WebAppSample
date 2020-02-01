@@ -53,7 +53,7 @@ namespace WebAppLib
             }
         }
 
-        private static void SetSQLiteCommand(SQLiteCommand cmd, string sql, Dictionary<string, dynamic> parameters)
+        private void SetSQLiteCommand(SQLiteCommand cmd, string sql, Dictionary<string, dynamic> parameters)
         {
             cmd.CommandText = sql;
             if (parameters != null)
@@ -75,7 +75,22 @@ namespace WebAppLib
             }
         }
 
-        public DataTable Fill(string sql, Dictionary<string, dynamic> parameters)
+		public DataTable Fill(string sql)
+		{
+			DataTable dataTable = new DataTable();
+
+			using (SQLiteCommand cmd = new SQLiteCommand(sql, con, tran))
+			{
+				SetSQLiteCommand(cmd, sql, null);
+				using (SQLiteDataAdapter adapter = new SQLiteDataAdapter(cmd))
+				{
+					int ret = adapter.Fill(dataTable);
+				}
+			}
+			return dataTable;
+		}
+
+		public DataTable Fill(string sql, Dictionary<string, dynamic> parameters)
         {
             DataTable dataTable = new DataTable();
 
