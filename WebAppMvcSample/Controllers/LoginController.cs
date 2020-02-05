@@ -30,12 +30,25 @@ namespace WebAppMvcSample.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post()
+        public ActionResult Click(LoginModel model)
         {
             logger.StartMethod(MethodBase.GetCurrentMethod().Name);
-
-            logger.EndMethod(MethodBase.GetCurrentMethod().Name);
-            return View(model);
+            try
+            {
+                if (model.Password.Equals("kamuo"))
+                {
+                    return View("MenuView", model);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.WriteException(MethodBase.GetCurrentMethod().Name, ex);
+            }
+            finally
+            {
+                logger.EndMethod(MethodBase.GetCurrentMethod().Name);
+            }
+            return View("Index",model);
         }
     }
 }

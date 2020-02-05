@@ -1,0 +1,44 @@
+﻿--------------------------------------------------
+◆Utility 有用部品 主に静的クラス・メソッド 環境特有の状態を持たず別プロジェクトで使って動くもの
+　・.NET Framework標準のライブラリで完結しており、参照の追加が不要
+
+◆Common 共通部品 業務独自性のあるもの、環境特有の状態を持つもの
+　・ファイルパスに依存するものなど
+
+◆Manager ラッピングクラス
+
+--------------------------------------------------
+C#
+◆アクセス修飾子
+https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/keywords/access-modifiers
+public 無制限
+protected 派生クラス
+internal 同アセンブリ
+private 同クラス内
+
+protected internal 同アセンブリ or 派生クラス
+private protected 包含アセンブリ内派生クラス (C# 7.2～)
+
+・省略時はクラスはinternal、子メンバはprivateになるが原則省略しないこと
+・出来るだけ狭い範囲に制限すること
+--------------------------------------------------
+◆気になった事
+・省略可能なthisは省略する
+・Stringは使わず、stringを使う
+
+・【情報】IDE1006 メソッド名の先頭は大文字(PascalCase) ※javaは小文字(camelCase)
+
+・【警告】CS0168 例外処理を空にしない
+https://docs.microsoft.com/ja-jp/dotnet/csharp/misc/cs0168
+【NG】
+	catch (Exception ex)
+	{
+
+	}
+【OK】
+	catch (Exception ex)
+	{
+		Logger.GetInstance(GetType().Name).WriteException(MethodBase.GetCurrentMethod().Name,ex);
+	}
+
+・【情報】 IDE0059 未使用の変数は削除する(残しておきたい場合はコメントにする)

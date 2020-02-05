@@ -25,14 +25,43 @@ namespace WebAppSample
         {
             try
             {
-                string path = Server.MapPath("./sqlite/");
+                //string path = Server.MapPath("./sqlite/");
+                //string dataSource = Path.Combine(path, "WebApp.db");
 
-                string dataSource = Path.Combine(path, "WebApp.db");
+                //using (SQLiteUtility util = new SQLiteUtility(dataSource))
+                //{
+                //    util.Connect();
+                //    string sql = "SELECT * FROM userinfo WHERE userid = @userid";
+                //    string userid = TextBoxId.Text;
+                //    Dictionary<string, dynamic> parameters = new Dictionary<string, dynamic>
+                //    {
+                //        {  "userid", userid },
+                //    };
+                //    DataTable dataTable = util.Fill(sql, parameters);
+                //    if (dataTable.Rows.Count > 0)
+                //    {
+                //        if (dataTable.Rows[0]["password"].ToString().Equals(TextBoxPw.Text))
+                //        {
+                //            LabelMessage.Text = "認証に成功しました。";
+                //            SessionManager.UserInfo userInfo = new SessionManager.UserInfo(Session)
+                //            {
+                //                UserId = userid,
+                //            };
+                //            Server.Transfer("~/Menu.aspx", true);
+                //        }
+                //        else
+                //        {
+                //            LabelMessage.Text = "パスワードが違います。";
+                //        }
+                //    }
+                //    else
+                //    {
+                //        LabelMessage.Text = "ユーザーが未登録です。";
+                //    }
+                //}
 
-                using (SQLiteUtility util = new SQLiteUtility(dataSource))
+                using (ISQLManager manager = SQLManager.GetInterface("WebApp.db"))
                 {
-                    util.Connect();
-
                     string sql = "SELECT * FROM userinfo WHERE userid = @userid";
 
                     string userid = TextBoxId.Text;
@@ -42,7 +71,7 @@ namespace WebAppSample
                         {  "userid", userid },
                     };
 
-                    DataTable dataTable = util.Fill(sql, parameters);
+                    DataTable dataTable = manager.Select(sql, parameters);
 
                     if (dataTable.Rows.Count > 0)
                     {

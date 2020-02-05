@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Web;
 
 namespace WebAppLib
 {
     public class SQLManager : ISQLManager
     {
         private static readonly DataBaseType defaultType = DataBaseType.SQLite;
+        private static readonly string dbName = "WebApp.db";
 
-        public enum DataBaseType
+        private enum DataBaseType
         {
             SQLServer,
             SQLite,
@@ -24,12 +27,17 @@ namespace WebAppLib
             logger = Logger.GetInstance(GetType().Name);
         }
 
-        private static SQLManager GetInstance(string dataSource)
+        public static ISQLManager GetInterface()
         {
-            return GetInstance(defaultType, dataSource, null, null, null);
+            return GetInterface(dbName);
         }
 
-        public static SQLManager GetInstance(string dataSource, string dataBase, string userId, string password)
+        public static ISQLManager GetInterface(string dbName)
+        {
+            return GetInterface(dbName, null, null, null);
+        }
+
+        public static ISQLManager GetInterface(string dataSource, string dataBase, string userId, string password)
         {
             return GetInstance(defaultType, dataSource, dataBase, userId, password);
         }
@@ -46,7 +54,9 @@ namespace WebAppLib
                     break;
                 case DataBaseType.SQLite:
                 default:
-                    service.dbUtil = new SQLiteUtility(dataSource);
+                    string basePath = HttpContext.Current.Server.MapPath("./sqlite/");
+                    string path = Path.Combine(basePath, dataSource);
+                    service.dbUtil = new SQLiteUtility(path);
                     break;
             }
 

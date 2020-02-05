@@ -42,6 +42,13 @@ namespace WebAppLib
         #endregion
 
         #region フィールド
+
+#if DEBUG
+        private static readonly bool isWriteFile = true;
+#else
+        private static readonly bool isWriteFile = false;
+#endif
+
         #region AsyncLock
         /// <summary>
         /// AsyncLock
@@ -83,7 +90,7 @@ namespace WebAppLib
         ///// ロックオブジェクト
         ///// </summary>
         //private static readonly AsyncLock _asyncLock = new AsyncLock();
-        #endregion
+#endregion
 
         /// <summary>
         /// ロックオブジェクト
@@ -104,7 +111,7 @@ namespace WebAppLib
         /// タスク
         /// </summary>
         private Task _task = null;
-        #endregion
+#endregion
 
         /// <summary>
         /// コンストラクタ
@@ -154,7 +161,7 @@ namespace WebAppLib
             return WriteLine(log, System.Threading.Timeout.Infinite);
         }
 
-        #region WriteLine
+#region WriteLine
         public bool StartMethod(string methodName, params string[] values)
         {
             if (values.Length > 0)
@@ -247,7 +254,7 @@ namespace WebAppLib
 
             return ret;
         }
-        #endregion
+#endregion
 
         /// <summary>
         /// ログ出力用文字列の取得
@@ -271,32 +278,51 @@ namespace WebAppLib
                 if (_que.Count != 0)
                 {
                     // キューがある場合
-                    using (await dicLockObj[LogFilePath].LockAsync())
+                    if (isWriteFile)
                     {
-                        // ファイルを開く
-                        using (StreamWriter sw = new StreamWriter(LogFilePath, true))
+                        using (await dicLockObj[LogFilePath].LockAsync())
                         {
-                            try
+                            // ファイルを開く
+                            using (StreamWriter sw = new StreamWriter(LogFilePath, true))
                             {
-                                // キューが無くなるまで書き込む
-                                while (_que.Count > 0)
+                                try
                                 {
-                                    string item;
-                                    if (_que.TryTake(out item, 1 * 1000))
+                                    // キューが無くなるまで書き込む
+                                    while (_que.Count > 0)
                                     {
-                                        // 書き終わるまで処理を待つ
-                                        await sw.WriteLineAsync(item);
-                                    }
-                                    else
-                                    {
-                                        Debug.WriteLine("TryTake Error");
-                                        break;
+                                        if (_que.TryTake(out string item, 1 * 1000))
+                                        {
+                                            // 書き終わるまで処理を待つ
+                                            Debug.WriteLine(item);
+                                            await sw.WriteLineAsync(item);
+                                        }
+                                        else
+                                        {
+                                            Debug.WriteLine("TryTake Error");
+                                            break;
+                                        }
                                     }
                                 }
+                                catch (Exception ex)
+                                {
+                                    Debug.WriteLine($"[{MethodBase.GetCurrentMethod().Name}][{ex.Message}]");
+                                }
                             }
-                            catch (Exception ex)
+                        }
+                    }
+                    else
+                    {
+                        while (_que.Count > 0)
+                        {
+                            if (_que.TryTake(out string item, 1 * 1000))
                             {
-                                Debug.WriteLine($"[{MethodBase.GetCurrentMethod().Name}][{ex.Message}]");
+                                // 書き終わるまで処理を待つ
+                                Debug.WriteLine(item);
+                            }
+                            else
+                            {
+                                Debug.WriteLine("TryTake Error");
+                                break;
                             }
                         }
                     }
@@ -306,7 +332,7 @@ namespace WebAppLib
             }
         }
 
-        #region IDisposable Support
+#region IDisposable Support
         private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing)
@@ -365,6 +391,6 @@ namespace WebAppLib
 
             //GC.SuppressFinalize(this);
         }
-        #endregion
+#endregion
     }
 }
