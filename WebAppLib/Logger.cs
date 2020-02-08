@@ -33,7 +33,7 @@ namespace WebAppLib
         /// <summary>
         /// ログ出力ディレイ(ms)
         /// </summary>
-        public int WriteDelay { get; set; } = (int)(0.5 * 1000);
+        public int WriteDelay { get; set; } = (int)(1000);
 
         /// <summary>
         /// 終了時のWait時間(ms)
@@ -302,7 +302,7 @@ namespace WebAppLib
             {
                 while (_loopWriteLog)
                 {
-                    if (_que.Count != 0)
+                    if (_que.Count > 0)
                     {
                         // キューがある場合
                         if (isWriteFile)
@@ -404,6 +404,35 @@ namespace WebAppLib
                     finally
                     {
 
+                    }
+
+                    if (_que.Count > 0)
+                    {
+                        using (StreamWriter sw = new StreamWriter(LogFilePath, true))
+                        {
+                            try
+                            {
+                                // キューが無くなるまで書き込む
+                                while (_que.Count > 0)
+                                {
+                                    if (_que.TryTake(out string item, 1 * 1000))
+                                    {
+                                        // 書き終わるまで処理を待つ
+                                        Debug.WriteLine(item);
+                                        sw.WriteLine(item);
+                                    }
+                                    else
+                                    {
+                                        Debug.WriteLine("TryTake Error");
+                                        break;
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine($"[{MethodBase.GetCurrentMethod().Name}][{ex}]");
+                            }
+                        }
                     }
 
                     _que.Dispose();
