@@ -9,12 +9,18 @@ namespace WebAppLib
 {
     public interface ISQLManager : IDisposable
     {
-        DataTable Select(string sql, Dictionary<string, dynamic> parameters);
-        int Insert(string sql, Dictionary<string, dynamic> parameters);
+        /// <summary>
+        /// 検索
+        /// </summary>
+        /// <param name="sql">クエリ</param>
+        /// <param name="parameters">パラメータ</param>
+        /// <returns></returns>
+        DataTable Select(string sql, Dictionary<string, dynamic> parameters = null);
+        int Insert(string sql, Dictionary<string, dynamic> parameters = null);
 
-        DataTable Lock(string sql, Dictionary<string, dynamic> parameters);
-        int Update(string sql, Dictionary<string, dynamic> parameters);
-        int Delete(string sql, Dictionary<string, dynamic> parameters);
+        DataTable Lock(string sql, Dictionary<string, dynamic> parameters = null);
+        int Update(string sql, Dictionary<string, dynamic> parameters = null);
+        int Delete(string sql, Dictionary<string, dynamic> parameters = null);
 
         void Commit();
         void RollBack();

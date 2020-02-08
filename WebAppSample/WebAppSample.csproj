@@ -75,12 +75,25 @@
   <ItemGroup>
     <Content Include="bin\x64\SQLite.Interop.dll" />
     <Content Include="bin\x86\SQLite.Interop.dll" />
+    <Content Include="css\bootstrap-grid.css" />
+    <Content Include="css\bootstrap-grid.min.css" />
+    <Content Include="css\bootstrap-reboot.css" />
+    <Content Include="css\bootstrap-reboot.min.css" />
+    <Content Include="css\bootstrap.css" />
+    <Content Include="css\bootstrap.min.css" />
     <Content Include="css\todo.css" />
     <Content Include="custom\WebFooterControl.ascx" />
     <Content Include="Dentaku.aspx" />
     <Content Include="doc\webappdb.sql" />
+    <Content Include="doc\Yontaku.sql" />
     <Content Include="FrmYogoList.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="js\bootstrap.bundle.js" />
+    <Content Include="js\bootstrap.bundle.min.js" />
+    <Content Include="js\bootstrap.js" />
+    <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\jquery-3.3.0.js" />
+    <Content Include="js\jquery-3.3.0.min.js" />
     <Content Include="Kotsuhi.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="doc\memo.txt" />
@@ -91,6 +104,8 @@
     <Content Include="js\VueTest.js" />
     <Content Include="Web.config" />
     <Content Include="Kintai.aspx" />
+    <Content Include="Yontaku\css\Yontaku.css" />
+    <Content Include="Yontaku\Yontaku.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="custom\WebFooterControl.ascx.cs">
@@ -168,8 +183,26 @@
     <Compile Include="Kintai.aspx.designer.cs">
       <DependentUpon>Kintai.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Yontaku\Yontaku.aspx.cs">
+      <DependentUpon>Yontaku.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Yontaku\Yontaku.aspx.designer.cs">
+      <DependentUpon>Yontaku.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Yontaku\Logic\YontakuLogic.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="js\bootstrap.bundle.js.map" />
+    <Content Include="js\bootstrap.bundle.min.js.map" />
+    <Content Include="js\bootstrap.js.map" />
+    <Content Include="js\bootstrap.min.js.map" />
+    <Content Include="css\bootstrap-grid.css.map" />
+    <Content Include="css\bootstrap-grid.min.css.map" />
+    <Content Include="css\bootstrap-reboot.css.map" />
+    <Content Include="css\bootstrap-reboot.min.css.map" />
+    <Content Include="css\bootstrap.css.map" />
+    <Content Include="css\bootstrap.min.css.map" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\puriko - Web Deploy.pubxml" />
     <Content Include="sqlite\main.db" />
@@ -177,6 +210,7 @@
     <Content Include="sqlite\Kotsuhi.db" />
     <Content Include="sqlite\todo.db" />
     <Content Include="sqlite\yougo.db" />
+    <Content Include="sqlite\Yontaku.db" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -187,7 +221,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="log\" />
     <Folder Include="Models\" />
+    <Folder Include="Yontaku\js\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebAppLib\WebAppLib.csproj">

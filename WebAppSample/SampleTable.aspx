@@ -46,7 +46,7 @@
 							<asp:TextBox ID="TextBox2" runat="server" Text='<%# Eval("col2") %>'></asp:TextBox>
 						</td>
 						<td style="border: 1px solid black;">
-							<asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
+							<asp:Button ID="ButtonTest" runat="server" Text="テスト" OnClick="ButtonTest_Click" />
 						</td>
 					</tr>
 				</ItemTemplate>

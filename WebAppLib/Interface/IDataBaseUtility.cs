@@ -15,11 +15,9 @@ namespace WebAppLib
 
 		void Commit();
 
-		DataTable Fill(string sql);
+        DataTable Fill(string sql, Dictionary<string, dynamic> parameters = null);
 
-		DataTable Fill(string sql, Dictionary<string, dynamic> parameters);
-
-        int Execute(string sql, Dictionary<string, dynamic> parameters);
+        int Execute(string sql, Dictionary<string, dynamic> parameters = null);
 
 		void Close();
     }

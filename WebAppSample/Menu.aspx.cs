@@ -38,8 +38,11 @@ namespace WebAppSample
 				row["Name"] = "ログアウト";
 				dt.Rows.Add(row);
 
+                row = dt.NewRow();
+                row["Name"] = "四択";
+                dt.Rows.Add(row);
 
-				Repeater1.DataSource = dt;
+                Repeater1.DataSource = dt;
 				Repeater1.DataBind();
 			}
 			else
@@ -53,25 +56,25 @@ namespace WebAppSample
 			switch (((Button)sender).Text)
 			{
 				case "ToDo":
-					Server.Transfer("~/ToDo.aspx", true);
+					Server.Transfer("~/ToDo.aspx", false);
 					break;
 				case "Web勤怠表":
-					Server.Transfer("~/Kintai.aspx", true);
+					Server.Transfer("~/Kintai.aspx", false);
 					break;
 				case "交通費精算":
-					Server.Transfer("~/Kotsuhi.aspx", true);
+					Server.Transfer("~/Kotsuhi.aspx", false);
 					break;
 				case "用語集":
-					Server.Transfer("~/FrmYogoList.aspx", true);
+					Server.Transfer("~/FrmYogoList.aspx", false);
 					break;
 				case "電卓":
-                    Server.Transfer("~/ToDo.aspx", true);
+                    Server.Transfer("~/ToDo.aspx", false);
                     break;
-                case "王-1GP申請":
-                    Server.Transfer("~/ToDo.aspx", true);
+                case "四択":
+                    Server.Transfer("~/Yontaku/Yontaku.aspx", false);
                     break;
 				default:
-					Server.Transfer("~/Login.aspx", true);
+					Server.Transfer("~/Login.aspx", false);
 					break;
 			}
 		}

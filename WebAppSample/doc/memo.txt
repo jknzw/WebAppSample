@@ -1,11 +1,12 @@
 ﻿--------------------------------------------------
 ◆Utility 有用部品 主に静的クラス・メソッド 環境特有の状態を持たず別プロジェクトで使って動くもの
-　・.NET Framework標準のライブラリで完結しており、参照の追加が不要
+　・原則、.NET Framework標準のライブラリで完結しており、プロジェクトへ参照DLLの追加が不要
 
 ◆Common 共通部品 業務独自性のあるもの、環境特有の状態を持つもの
 　・ファイルパスに依存するものなど
 
 ◆Manager ラッピングクラス
+  ・各ライブラリとのやり取りを簡略化する
 
 --------------------------------------------------
 C#
@@ -23,6 +24,7 @@ private protected 包含アセンブリ内派生クラス (C# 7.2～)
 ・出来るだけ狭い範囲に制限すること
 --------------------------------------------------
 ◆気になった事
+・警告レベルを4にする
 ・省略可能なthisは省略する
 ・Stringは使わず、stringを使う
 
@@ -42,3 +44,16 @@ https://docs.microsoft.com/ja-jp/dotnet/csharp/misc/cs0168
 	}
 
 ・【情報】 IDE0059 未使用の変数は削除する(残しておきたい場合はコメントにする)
+
+--------------------------------------------------
+◆コードレビュー観点
+https://qiita.com/gakuri/items/f4970aea8de5fa9bf016
+https://www.ipa.go.jp/files/000059838.pdf
+https://qiita.com/kouyan/items/7b8b456b626447a1e24e
+
+--------------------------------------------------
+◆bootstrap4
+移行ガイド https://cccabinet.jpn.org/bootstrap4/layout/grid
+中央寄せ mx-auto https://qiita.com/Fendo181/items/1f32cbbfa676766ae331
+配置 xs sm md lg xl https://qiita.com/akatsuki174/items/53b7367b04ed0b066bbf
+オフセット offset-xs https://webnetamemo.com/coding/bootstrap4/201902227791 ※bootstrap3から変更

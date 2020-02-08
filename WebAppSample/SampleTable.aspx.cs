@@ -11,6 +11,11 @@ namespace WebAppSample
 {
 	public partial class SampleTable : System.Web.UI.Page
 	{
+        /// <summary>
+        /// Page_Load
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			if (IsPostBack)
@@ -19,50 +24,64 @@ namespace WebAppSample
 				return;
 			}
 			else
-			{
-				// 初回起動
+            {
+                // 初期処理
+                PageInit(sender, e);
+            }
+        }
 
-				//==============================
-				// Repeater1へのデータ設定サンプル
-				//==============================
-				// 新規データテーブルの作成
-				DataTable table = new DataTable();
-				// 列の作成
-				table.Columns.Add("col1");
-				table.Columns.Add("col2");
-				
-				// 行の追加①
-				table.Rows.Add("data1", "data2");
+        /// <summary>
+        /// 初期処理
+        /// </summary>
+        private void PageInit(object sender, EventArgs e)
+        {
+            //==============================
+            // Repeater1へのデータ設定サンプル
+            //==============================
+            // 新規データテーブルの作成
+            DataTable table = new DataTable();
+            // 列の作成
+            table.Columns.Add("col1");
+            table.Columns.Add("col2");
 
-				// 行の追加②
-				DataRow row = table.NewRow();
-				row["col1"] = "data3";
-				row["col2"] = "data4";
-				table.Rows.Add(row);
+            // 行の追加①
+            table.Rows.Add("data1", "data2");
 
-				// リピーターにデータソースを設定
-				Repeater1.DataSource = table;
-				Repeater1.DataBind();
+            // 行の追加②
+            DataRow row = table.NewRow();
+            row["col1"] = "data3";
+            row["col2"] = "data4";
+            table.Rows.Add(row);
 
-				// データソースを画面に保持(編集前データ)
-				ViewState["DataSource"] = table;
+            // リピーターにデータソースを設定
+            Repeater1.DataSource = table;
+            Repeater1.DataBind();
 
-				//==============================
-				// メッセージの追加サンプル
-				//==============================
-				List<string> msg = new List<string>();
-				msg.Add("msg1");
-				msg.Add("msg2");
-				msg.Add("msg3");
-				RepeaterMessage.DataSource = msg;
-				RepeaterMessage.DataBind();
+            // データソースを画面に保持(編集前データ)
+            ViewState["DataSource"] = table;
 
-				// 複数行のテキストボックス
-				TextBoxMultiLine.Text = "aaa\r\nbbb";
-			}
-		}
+            //==============================
+            // メッセージの追加サンプル
+            //==============================
+            List<string> msg = new List<string>
+            {
+                "msg1",
+                "msg2",
+                "msg3"
+            };
+            RepeaterMessage.DataSource = msg;
+            RepeaterMessage.DataBind();
 
-		protected void Button1_Click(object sender, EventArgs e)
+            // 複数行のテキストボックス
+            TextBoxMultiLine.Text = "aaa\r\nbbb";
+        }
+
+        /// <summary>
+        /// テストボタン押下
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void ButtonTest_Click(object sender, EventArgs e)
 		{
 			// 選択されたIDの取得
 			string[] ids = ((Button)sender).ClientID.Split('_');

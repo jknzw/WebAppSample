@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -23,6 +24,7 @@ namespace WebAppSample
 
         protected void ButtonLogin_Click(object sender, EventArgs e)
         {
+            bool isLogin = false;
             try
             {
                 //string path = Server.MapPath("./sqlite/");
@@ -84,7 +86,7 @@ namespace WebAppSample
                                 UserId = userid,
                             };
 
-                            Server.Transfer("~/Menu.aspx", true);
+                            isLogin = true;
                         }
                         else
                         {
@@ -100,6 +102,12 @@ namespace WebAppSample
             catch (Exception ex)
             {
                 LabelMessage.Text = ex.Message;
+                Logger.GetInstance(GetType().Name).WriteException(MethodBase.GetCurrentMethod().Name,ex);
+            }
+
+            if (isLogin)
+            {
+                Server.Transfer("~/Menu.aspx", false);
             }
         }
     }

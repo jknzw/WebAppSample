@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,7 +42,10 @@ namespace WebAppLib
 
         public void Connect()
         {
-            SQLiteConnectionStringBuilder conStrBuilder = new SQLiteConnectionStringBuilder { DataSource = dataSource };
+            SQLiteConnectionStringBuilder conStrBuilder = new SQLiteConnectionStringBuilder
+            {
+                DataSource = dataSource,
+            };
 
             con = new SQLiteConnection(conStrBuilder.ToString());
             con.Open();
@@ -78,22 +82,7 @@ namespace WebAppLib
             }
         }
 
-		public DataTable Fill(string sql)
-		{
-			DataTable dataTable = new DataTable();
-
-			using (SQLiteCommand cmd = new SQLiteCommand(sql, con, tran))
-			{
-				SetSQLiteCommand(cmd, sql, null);
-				using (SQLiteDataAdapter adapter = new SQLiteDataAdapter(cmd))
-				{
-					int ret = adapter.Fill(dataTable);
-				}
-			}
-			return dataTable;
-		}
-
-		public DataTable Fill(string sql, Dictionary<string, dynamic> parameters)
+		public DataTable Fill(string sql, Dictionary<string, dynamic> parameters = null)
         {
             DataTable dataTable = new DataTable();
 

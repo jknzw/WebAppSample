@@ -11,7 +11,7 @@ namespace WebAppLib
     public class SQLManager : ISQLManager
     {
         private static readonly DataBaseType defaultType = DataBaseType.SQLite;
-        private static readonly string dbName = "WebApp.db";
+        private static readonly string defaultDbName = "WebApp.db";
 
         private enum DataBaseType
         {
@@ -24,12 +24,12 @@ namespace WebAppLib
 
         private SQLManager()
         {
-            logger = Logger.GetInstance(GetType().Name);
+            logger = Logger.GetInstance(nameof(SQLManager));
         }
 
         public static ISQLManager GetInterface()
         {
-            return GetInterface(dbName);
+            return GetInterface(defaultDbName);
         }
 
         public static ISQLManager GetInterface(string dbName)
@@ -54,7 +54,7 @@ namespace WebAppLib
                     break;
                 case DataBaseType.SQLite:
                 default:
-                    string basePath = HttpContext.Current.Server.MapPath("./sqlite/");
+                    string basePath = HttpContext.Current.Server.MapPath("~/sqlite/");
                     string path = Path.Combine(basePath, dataSource);
                     service.dbUtil = new SQLiteUtility(path);
                     break;
@@ -71,29 +71,41 @@ namespace WebAppLib
         {
             logger.StartMethod(MethodBase.GetCurrentMethod().Name);
 
-            return Update(sql, parameters);
+            int count = Update(sql, parameters);
+
+            logger.EndMethod(MethodBase.GetCurrentMethod().Name);
+            return count;
         }
 
         public DataTable Select(string sql, Dictionary<string, dynamic> parameters = null)
         {
             logger.StartMethod(MethodBase.GetCurrentMethod().Name);
-            WriteSqlLog(sql, parameters);
 
-            return dbUtil.Fill(sql, parameters);
+            WriteSqlLog(sql, parameters);
+            DataTable table = dbUtil.Fill(sql, parameters);
+
+            logger.EndMethod(MethodBase.GetCurrentMethod().Name);
+            return table;
         }
         public DataTable Lock(string sql, Dictionary<string, dynamic> parameters)
         {
             logger.StartMethod(MethodBase.GetCurrentMethod().Name);
 
-            return Select(sql, parameters);
+            DataTable table = Select(sql, parameters);
+
+            logger.EndMethod(MethodBase.GetCurrentMethod().Name);
+            return table;
         }
 
         public int Update(string sql, Dictionary<string, dynamic> parameters)
         {
             logger.StartMethod(MethodBase.GetCurrentMethod().Name);
-            WriteSqlLog(sql, parameters);
 
-            return dbUtil.Execute(sql, parameters);
+            WriteSqlLog(sql, parameters);
+            int count = dbUtil.Execute(sql, parameters);
+
+            logger.EndMethod(MethodBase.GetCurrentMethod().Name);
+            return count;
         }
 
         private void WriteSqlLog(string sql, Dictionary<string, dynamic> parameters)
@@ -103,7 +115,18 @@ namespace WebAppLib
             {
                 foreach (string key in parameters.Keys)
                 {
-                    debugsql = debugsql.Replace("@" + key, parameters[key].ToString());
+                    switch (parameters[key])
+                    {
+                        case DateTime dt:
+                            debugsql = debugsql.Replace($"@{key}", $"'{dt.ToString("yyyy/MM/dd HH:mm:ss.fff")}'");
+                            break;
+                        case string s:
+                            debugsql = debugsql.Replace($"@{key}", $"'{s}'");
+                            break;
+                        default:
+                            debugsql = debugsql.Replace($"@{key}", parameters[key].ToString());
+                            break;
+                    }
                 }
             }
             logger.WriteLine(debugsql);
@@ -113,7 +136,10 @@ namespace WebAppLib
         {
             logger.StartMethod(MethodBase.GetCurrentMethod().Name);
 
-            return Update(sql, parameters);
+            int count = Update(sql, parameters);
+
+            logger.EndMethod(MethodBase.GetCurrentMethod().Name);
+            return count;
         }
 
         public int Call(string sql, Dictionary<string, dynamic> parameters)
@@ -122,8 +148,12 @@ namespace WebAppLib
 
             // TODO:outパラメータを受け取る
             // TODO:outパラメータにDictionaryを追加する
+            throw new NotSupportedException("未実装");
 
-            return Update(sql, parameters);
+            //int count = Update(sql, parameters);
+
+            //logger.EndMethod(MethodBase.GetCurrentMethod().Name);
+            //return count;
         }
 
         public void Commit()
@@ -132,6 +162,8 @@ namespace WebAppLib
 
             dbUtil.Commit();
             dbUtil.BeginTransaction();
+
+            logger.EndMethod(MethodBase.GetCurrentMethod().Name);
         }
 
         public void RollBack()
@@ -140,6 +172,8 @@ namespace WebAppLib
 
             dbUtil.RollBack();
             dbUtil.BeginTransaction();
+
+            logger.EndMethod(MethodBase.GetCurrentMethod().Name);
         }
 
         #region IDisposable Support
@@ -151,9 +185,12 @@ namespace WebAppLib
             {
                 if (disposing)
                 {
+                    logger.StartMethod(MethodBase.GetCurrentMethod().Name);
+
                     // マネージ状態を破棄します (マネージ オブジェクト)。
                     dbUtil?.Dispose();
 
+                    logger.EndMethod(MethodBase.GetCurrentMethod().Name);
                     logger?.Dispose();
                 }
 

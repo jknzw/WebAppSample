@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace WebAppLib
 {
@@ -48,6 +49,8 @@ namespace WebAppLib
 #else
         private static readonly bool isWriteFile = false;
 #endif
+
+        private Dictionary<string, Stopwatch> dicSw = new Dictionary<string, Stopwatch>();
 
         #region AsyncLock
         /// <summary>
@@ -130,7 +133,8 @@ namespace WebAppLib
         public static Logger GetInstance(string baseFileName, int taskTimeout = 0)
         {
             // ログファイルパスの生成
-            string logFilePath = $"{baseFileName}{DateTime.Now.ToString("yyyyMMdd")}.log";
+            string basePath = HttpContext.Current.Server.MapPath("~/log/");
+            string logFilePath = Path.Combine(basePath,$"{baseFileName}{DateTime.Now.ToString("yyyyMMdd")}.log");
 
             Logger log = new Logger()
             {
@@ -164,25 +168,46 @@ namespace WebAppLib
 #region WriteLine
         public bool StartMethod(string methodName, params string[] values)
         {
+            bool ret;
             if (values.Length > 0)
             {
-                return WriteLine($"[{methodName}] Method Start [{string.Join("][", values)}]");
+                ret = WriteLine($"[{methodName}] Method Start [{string.Join("][", values)}]");
             }
             else
             {
-                return WriteLine($"[{methodName}] Method Start");
+                ret = WriteLine($"[{methodName}] Method Start");
             }
+
+            if (dicSw.ContainsKey(methodName))
+            {
+                dicSw[methodName].Restart();
+            }
+            else
+            {
+                Stopwatch sw = new Stopwatch();
+                dicSw.Add(methodName, sw);
+                sw.Start();
+            }
+            return ret;
         }
 
         public bool EndMethod(string methodName, params string[] values)
         {
+            string time = string.Empty;
+            if (dicSw.ContainsKey(methodName))
+            {
+                Stopwatch sw = dicSw[methodName];
+                sw.Stop();
+                TimeSpan ts = sw.Elapsed;
+                time = $"{ts.Milliseconds}ms";
+            }
             if (values.Length > 0)
             {
-                return WriteLine($"[{methodName}] Method End [{string.Join("][", values)}]");
+                return WriteLine($"[{methodName}] Method End [{string.Join("][", values)}]{time}");
             }
             else
             {
-                return WriteLine($"[{methodName}] Method End");
+                return WriteLine($"[{methodName}] Method End {time}");
             }
         }
         public bool WriteException(string methodName, Exception ex, int timeout = 0)
@@ -249,7 +274,7 @@ namespace WebAppLib
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"[{MethodBase.GetCurrentMethod().Name}][{ex.Message}]");
+                Debug.WriteLine($"[{MethodBase.GetCurrentMethod().Name}][{ex}]");
             }
 
             return ret;
@@ -273,62 +298,69 @@ namespace WebAppLib
         /// <returns></returns>
         private async Task AsyncWriteLog()
         {
-            while (_loopWriteLog)
+            try
             {
-                if (_que.Count != 0)
+                while (_loopWriteLog)
                 {
-                    // キューがある場合
-                    if (isWriteFile)
+                    if (_que.Count != 0)
                     {
-                        using (await dicLockObj[LogFilePath].LockAsync())
+                        // キューがある場合
+                        if (isWriteFile)
                         {
-                            // ファイルを開く
-                            using (StreamWriter sw = new StreamWriter(LogFilePath, true))
+                            using (await dicLockObj[LogFilePath].LockAsync())
                             {
-                                try
+                                // ファイルを開く
+                                using (StreamWriter sw = new StreamWriter(LogFilePath, true))
                                 {
-                                    // キューが無くなるまで書き込む
-                                    while (_que.Count > 0)
+                                    try
                                     {
-                                        if (_que.TryTake(out string item, 1 * 1000))
+                                        // キューが無くなるまで書き込む
+                                        while (_que.Count > 0)
                                         {
-                                            // 書き終わるまで処理を待つ
-                                            Debug.WriteLine(item);
-                                            await sw.WriteLineAsync(item);
-                                        }
-                                        else
-                                        {
-                                            Debug.WriteLine("TryTake Error");
-                                            break;
-                                        }
+                                            if (_que.TryTake(out string item, 1 * 1000))
+                                            {
+                                                // 書き終わるまで処理を待つ
+                                                Debug.WriteLine(item);
+                                                await sw.WriteLineAsync(item);
+                                            }
+                                            else
+                                            {
+                                                Debug.WriteLine("TryTake Error");
+                                                break;
+                                            }
+                                        }                                        
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Debug.WriteLine($"[{MethodBase.GetCurrentMethod().Name}][{ex}]");
                                     }
                                 }
-                                catch (Exception ex)
+                            }
+                        }
+                        else
+                        {
+                            while (_que.Count > 0)
+                            {
+                                if (_que.TryTake(out string item, 1 * 1000))
                                 {
-                                    Debug.WriteLine($"[{MethodBase.GetCurrentMethod().Name}][{ex.Message}]");
+                                    // 書き終わるまで処理を待つ
+                                    Debug.WriteLine(item);
+                                }
+                                else
+                                {
+                                    Debug.WriteLine("TryTake Error");
+                                    break;
                                 }
                             }
                         }
                     }
-                    else
-                    {
-                        while (_que.Count > 0)
-                        {
-                            if (_que.TryTake(out string item, 1 * 1000))
-                            {
-                                // 書き終わるまで処理を待つ
-                                Debug.WriteLine(item);
-                            }
-                            else
-                            {
-                                Debug.WriteLine("TryTake Error");
-                                break;
-                            }
-                        }
-                    }
+                    // キューが無い場合 or 書き込み終わったら待機
+                    await Task.Delay(WriteDelay);
                 }
-                // キューが無い場合 or 書き込み終わったら待機
-                await Task.Delay(WriteDelay);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
             }
         }
 
@@ -345,13 +377,20 @@ namespace WebAppLib
 
                     // 出力の終了を待つ
                     _loopWriteLog = false;
-                    if (TaskTimeout == 0)
+                    try
                     {
-                        _task.Wait();
+                        if (TaskTimeout == 0)
+                        {
+                            _task.Wait();
+                        }
+                        else
+                        {
+                            _task.Wait(TaskTimeout);
+                        }
                     }
-                    else
+                    catch (AggregateException ex)
                     {
-                        _task.Wait(TaskTimeout);
+                        Debug.WriteLine(ex);
                     }
 
                     try
@@ -360,7 +399,7 @@ namespace WebAppLib
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex.Message);
+                        Debug.WriteLine(ex);
                     }
                     finally
                     {
