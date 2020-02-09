@@ -152,94 +152,105 @@ namespace WebAppSample.Yontaku
         /// <param name="e"></param>
         protected void ButtonAnswer_Click(object sender, EventArgs e)
         {
-            logger.StartMethod(MethodBase.GetCurrentMethod().Name);
-
-            // 押下されたボタンのテキストを取得
-            string answer = ((Button)sender).Text;
-
-            switch (answer)
+            try
             {
-                case "おわる":
-                    // セッションクリア
-                    SessionRemove();
+                logger.StartMethod(MethodBase.GetCurrentMethod().Name);
 
-                    // メニューに遷移
-                    Server.Transfer("~/Menu.aspx", true);
-                    break;
-                case "つぎへ":
-                    {
-                        string level = HiddenFieldLevel.Value;
-                        string type = HiddenFieldType.Value;
-                        SetMondai(level, type);
+                // 押下されたボタンのテキストを取得
+                string answer = ((Button)sender).Text;
+
+                switch (answer)
+                {
+                    case "おわる":
+                        // セッションクリア
+                        SessionRemove();
+
+                        // メニューに遷移
+                        Server.Transfer("~/Menu.aspx", true);
+                        break;
+                    case "つぎへ":
+                        {
+                            string level = HiddenFieldLevel.Value;
+                            string type = HiddenFieldType.Value;
+                            SetMondai(level, type);
+                            PanelKekka.Visible = false;
+                        }
+                        break;
+                    case "いちねんせいのかんじ":
+                        {
+                            string level = "1";
+                            string type = "かき";
+                            HiddenFieldType.Value = type;
+                            HiddenFieldLevel.Value = level;
+                            SetMondai(level, type);
+                        }
+                        Button3.Visible = true;
+                        Button4.Visible = true;
                         PanelKekka.Visible = false;
-                    }
-                    break;
-                case "いちねんせいのかんじ":
-                    {
-                        string level = "1";
-                        string type = "かき";
-                        HiddenFieldType.Value = type;
-                        HiddenFieldLevel.Value = level;
-                        SetMondai(level, type);
-                    }
-                    Button3.Visible = true;
-                    Button4.Visible = true;
-                    PanelKekka.Visible = false;
-                    break;
-                case "にねんせいのかんじ":
-                    {
-                        string level = "2";
-                        string type = "かき";
-                        HiddenFieldType.Value = type;
-                        HiddenFieldLevel.Value = level;
-                        SetMondai(level, type);
-                    }
-                    Button3.Visible = true;
-                    Button4.Visible = true;
-                    PanelKekka.Visible = false;
-                    break;
-                default:
-                    // セッションから問題を取得
-                    DataRow mondaiRow = Session["mondai"] as DataRow;
+                        break;
+                    case "にねんせいのかんじ":
+                        {
+                            string level = "2";
+                            string type = "かき";
+                            HiddenFieldType.Value = type;
+                            HiddenFieldLevel.Value = level;
+                            SetMondai(level, type);
+                        }
+                        Button3.Visible = true;
+                        Button4.Visible = true;
+                        PanelKekka.Visible = false;
+                        break;
+                    default:
+                        // セッションから問題を取得
+                        DataRow mondaiRow = Session["mondai"] as DataRow;
 
-                    // 結果の設定
-                    YontakuLogic logic = new YontakuLogic();
-                    (bool result, string text) = logic.GetResult(answer, mondaiRow);
-                    LabelQuestion.Text = text;
+                        // 結果の設定
+                        YontakuLogic logic = new YontakuLogic();
+                        (bool result, string text) = logic.GetResult(answer, mondaiRow);
+                        LabelQuestion.Text = text;
 
-                    // 正解率の表示                    
-                    decimal.TryParse(HiddenFieldOk.Value, out decimal ok);
-                    decimal.TryParse(HiddenFieldNg.Value, out decimal ng);
-                    string resultText = logic.GetResultText(result, ref ok, ref ng);
-                    LabelResult.Text = resultText;
-                    HiddenFieldOk.Value = ok.ToString();
-                    HiddenFieldNg.Value = ng.ToString();
+                        // 正解率の表示                    
+                        decimal.TryParse(HiddenFieldOk.Value, out decimal ok);
+                        decimal.TryParse(HiddenFieldNg.Value, out decimal ng);
+                        string resultText = logic.GetResultText(result, ref ok, ref ng);
+                        LabelResult.Text = resultText;
+                        HiddenFieldOk.Value = ok.ToString();
+                        HiddenFieldNg.Value = ng.ToString();
 
-                    // 履歴の設定
-                    List<string> rireki = Session["rireki"] as List<string>;
-                    string header = LabelQuestionTitle.Text;
-                    rireki = logic.AddRireki(rireki, header, answer, mondaiRow);
-                    RepeaterRireki.DataSource = rireki;
-                    RepeaterRireki.DataBind();
-                    Session["rireki"] = rireki;
+                        // 履歴の設定
+                        List<string> rireki = Session["rireki"] as List<string>;
+                        string header = LabelQuestionTitle.Text;
+                        rireki = logic.AddRireki(rireki, header, answer, mondaiRow);
+                        RepeaterRireki.DataSource = rireki;
+                        RepeaterRireki.DataBind();
+                        Session["rireki"] = rireki;
 
-                    // 出題した問題を元のテーブルから削除
-                    if (Session["table"] is DataTable mondaiTable)
-                    {
-                        mondaiTable.Rows.Remove(mondaiRow);
-                    }
+                        // 出題した問題を元のテーブルから削除
+                        if (Session["table"] is DataTable mondaiTable)
+                        {
+                            mondaiTable.Rows.Remove(mondaiRow);
+                        }
 
-                    // ボタンの設定
-                    Button1.Text = "おわる";
-                    Button2.Text = "つぎへ";
-                    Button3.Visible = false;
-                    Button4.Visible = false;
+                        // ボタンの設定
+                        Button1.Text = "おわる";
+                        Button2.Text = "つぎへ";
+                        Button3.Visible = false;
+                        Button4.Visible = false;
 
-                    PanelKekka.Visible = true;
-                    break;
+                        PanelKekka.Visible = true;
+                        break;
+                }
             }
-
-            logger.EndMethod(MethodBase.GetCurrentMethod().Name);
+            catch (Exception ex)
+            {
+                logger.WriteException(MethodBase.GetCurrentMethod().Name, ex);
+                // 最初に遷移
+                Server.Transfer("~/Yontaku/Yontaku.aspx", true);
+            }
+            finally
+            {
+                logger.EndMethod(MethodBase.GetCurrentMethod().Name);
+            }
         }
     }
 }
