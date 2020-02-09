@@ -214,14 +214,14 @@ namespace WebAppSample.Yontaku
                     {
                         ok++;
                         decimal wariai = ok * 100 / (ok + ng);
-                        LabelResult.Text = $"けっか ○:{ok} ×:{ng} {decimal.Round(wariai, 2, MidpointRounding.AwayFromZero)}% ";
+                        LabelResult.Text = $"けっか [○:{ok}] [×:{ng}] せいかいりつ{decimal.Round(wariai, 2, MidpointRounding.AwayFromZero)}% ";
                         HiddenFieldOk.Value = ok.ToString();
                     }
                     else
                     {
                         ng++;
                         decimal wariai = ok * 100 / (ok + ng);
-                        LabelResult.Text = $"けっか ○:{ok} ×:{ng} {decimal.Round(wariai, 2, MidpointRounding.AwayFromZero)}% ";
+                        LabelResult.Text = $"けっか [○:{ok}] [×:{ng}] せいかいりつ{decimal.Round(wariai, 2, MidpointRounding.AwayFromZero)}% ";
                         HiddenFieldNg.Value = ng.ToString();
                     }
 
