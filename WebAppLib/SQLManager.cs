@@ -67,16 +67,6 @@ namespace WebAppLib
             return service;
         }
 
-        public int Insert(string sql, Dictionary<string, dynamic> parameters)
-        {
-            logger.StartMethod(MethodBase.GetCurrentMethod().Name);
-
-            int count = Update(sql, parameters);
-
-            logger.EndMethod(MethodBase.GetCurrentMethod().Name);
-            return count;
-        }
-
         public DataTable Select(string sql, Dictionary<string, dynamic> parameters = null)
         {
             logger.StartMethod(MethodBase.GetCurrentMethod().Name);
@@ -84,7 +74,7 @@ namespace WebAppLib
             WriteSqlLog(sql, parameters);
             DataTable table = dbUtil.Fill(sql, parameters);
 
-            logger.EndMethod(MethodBase.GetCurrentMethod().Name);
+            logger.EndMethod(MethodBase.GetCurrentMethod().Name, $"result[{table.Rows.Count}]");
             return table;
         }
         public DataTable Lock(string sql, Dictionary<string, dynamic> parameters)
@@ -93,10 +83,18 @@ namespace WebAppLib
 
             DataTable table = Select(sql, parameters);
 
-            logger.EndMethod(MethodBase.GetCurrentMethod().Name);
+            logger.EndMethod(MethodBase.GetCurrentMethod().Name, $"result[{table.Rows.Count}]");
             return table;
         }
+        public int Insert(string sql, Dictionary<string, dynamic> parameters)
+        {
+            logger.StartMethod(MethodBase.GetCurrentMethod().Name);
 
+            int count = Update(sql, parameters);
+
+            logger.EndMethod(MethodBase.GetCurrentMethod().Name, $"result[{count}]");
+            return count;
+        }
         public int Update(string sql, Dictionary<string, dynamic> parameters)
         {
             logger.StartMethod(MethodBase.GetCurrentMethod().Name);
@@ -104,7 +102,7 @@ namespace WebAppLib
             WriteSqlLog(sql, parameters);
             int count = dbUtil.Execute(sql, parameters);
 
-            logger.EndMethod(MethodBase.GetCurrentMethod().Name);
+            logger.EndMethod(MethodBase.GetCurrentMethod().Name, $"result[{count}]");
             return count;
         }
 
@@ -138,7 +136,7 @@ namespace WebAppLib
 
             int count = Update(sql, parameters);
 
-            logger.EndMethod(MethodBase.GetCurrentMethod().Name);
+            logger.EndMethod(MethodBase.GetCurrentMethod().Name, $"result[{count}]");
             return count;
         }
 
@@ -148,12 +146,11 @@ namespace WebAppLib
 
             // TODO:outパラメータを受け取る
             // TODO:outパラメータにDictionaryを追加する
-            throw new NotSupportedException("未実装");
 
-            //int count = Update(sql, parameters);
+            int count = Update(sql, parameters);
 
-            //logger.EndMethod(MethodBase.GetCurrentMethod().Name);
-            //return count;
+            logger.EndMethod(MethodBase.GetCurrentMethod().Name, $"result[{count}]");
+            return count;
         }
 
         public void Commit()
@@ -185,11 +182,11 @@ namespace WebAppLib
             {
                 if (disposing)
                 {
+                    dbUtil.Dispose();
+
                     logger.StartMethod(MethodBase.GetCurrentMethod().Name);
 
                     // マネージ状態を破棄します (マネージ オブジェクト)。
-                    dbUtil?.Dispose();
-
                     logger.EndMethod(MethodBase.GetCurrentMethod().Name);
                     logger?.Dispose();
                 }

@@ -95,6 +95,7 @@ namespace YogoList
                 var  aaa = ex;
             }
         }
+
         protected void btnUpd_Click(object sender, EventArgs e)
         {
             try

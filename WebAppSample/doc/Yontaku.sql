@@ -3,8 +3,7 @@
 -- SQLITEの自動採番 https://shobon.hatenablog.com/entry/2014/03/30/210444
 --DROP TABLE yontaku;
 CREATE TABLE yontaku( 
-	id INTEGER
-	, lvl text
+	lvl text
 	, type text
 	, mondai text NOT NULL
 	, keyword text NOT NULL
@@ -12,7 +11,7 @@ CREATE TABLE yontaku(
 	, choice1 text
 	, choice2 text
 	, choice3 text
-	, PRIMARY KEY (id)
+	, PRIMARY KEY (mondai,keyword)
 ); 
 
 --DROP TABLE answer;

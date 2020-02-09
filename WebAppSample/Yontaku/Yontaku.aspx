@@ -26,6 +26,32 @@
                 <asp:Button CssClass="col-lg-6 col-xs-12 btn-sticky font-answer green" ID="Button3" runat="server" Text="3" OnClick="ButtonAnswer_Click" />
                 <asp:Button CssClass="col-lg-6 col-xs-12 btn-sticky font-answer blue" ID="Button4" runat="server" Text="4" OnClick="ButtonAnswer_Click" />
             </div>
+            <asp:HiddenField ID="HiddenFieldLevel" runat="server" />
+            <asp:HiddenField ID="HiddenFieldType" runat="server" />
+
+            <asp:Panel ID="PanelKekka" runat="server">
+                <div class="row">
+                    <div class="card col-lg-8 col-xs-12">
+                        <asp:Label ID="LabelResult" CssClass="card-body font-answer mx-auto" runat="server" Text="" />
+                    </div>
+                    <button type="button" class="col-lg-4 col-xs-12 btn btn-primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        りれきをみる
+                    </button>
+                </div>
+            </asp:Panel>
+            <div class="row">
+                <div class="collapse col-12" id="collapseExample">
+                    <div class="border p-3">
+                        <asp:Repeater ID="RepeaterRireki" runat="server">
+                            <ItemTemplate>
+                                <div><%# Container.DataItem %></div>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </div>
+                </div>
+            </div>
+            <asp:HiddenField ID="HiddenFieldOk" runat="server" />
+            <asp:HiddenField ID="HiddenFieldNg" runat="server" />
         </div>
     </form>
 </body>

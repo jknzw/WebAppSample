@@ -50,7 +50,7 @@ namespace WebAppLib
         private static readonly bool isWriteFile = false;
 #endif
 
-        private Dictionary<string, Stopwatch> dicSw = new Dictionary<string, Stopwatch>();
+        private readonly Dictionary<string, Stopwatch> dicSw = new Dictionary<string, Stopwatch>();
 
         #region AsyncLock
         /// <summary>
