@@ -211,5 +211,26 @@ namespace WebAppSample.Yontaku.Logic
             }
             return rireki;
         }
+
+        /// <summary>
+        /// リザルトの取得
+        /// </summary>
+        /// <param name="result"></param>
+        /// <param name="ok"></param>
+        /// <param name="ng"></param>
+        /// <param name="resultText"></param>
+        internal string GetResultText(bool result, ref decimal ok, ref decimal ng)
+        {
+            if (result)
+            {
+                ok++;
+            }
+            else
+            {
+                ng++;
+            }
+            decimal wariai = ok * 100 / (ok + ng);
+            return $"けっか [○:{ok}] [×:{ng}] せいかいりつ{decimal.Round(wariai, 2, MidpointRounding.AwayFromZero)}% ";
+        }
     }
 }

@@ -210,20 +210,10 @@ namespace WebAppSample.Yontaku
                     // 正解率の表示                    
                     decimal.TryParse(HiddenFieldOk.Value, out decimal ok);
                     decimal.TryParse(HiddenFieldNg.Value, out decimal ng);
-                    if (result)
-                    {
-                        ok++;
-                        decimal wariai = ok * 100 / (ok + ng);
-                        LabelResult.Text = $"けっか [○:{ok}] [×:{ng}] せいかいりつ{decimal.Round(wariai, 2, MidpointRounding.AwayFromZero)}% ";
-                        HiddenFieldOk.Value = ok.ToString();
-                    }
-                    else
-                    {
-                        ng++;
-                        decimal wariai = ok * 100 / (ok + ng);
-                        LabelResult.Text = $"けっか [○:{ok}] [×:{ng}] せいかいりつ{decimal.Round(wariai, 2, MidpointRounding.AwayFromZero)}% ";
-                        HiddenFieldNg.Value = ng.ToString();
-                    }
+                    string resultText = logic.GetResultText(result, ref ok, ref ng);
+                    LabelResult.Text = resultText;
+                    HiddenFieldOk.Value = ok.ToString();
+                    HiddenFieldNg.Value = ng.ToString();
 
                     // 履歴の設定
                     List<string> rireki = Session["rireki"] as List<string>;
