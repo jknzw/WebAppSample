@@ -166,7 +166,7 @@ namespace WebAppSample.Yontaku
                         SessionRemove();
 
                         // メニューに遷移
-                        Server.Transfer("~/Menu.aspx", true);
+                        Server.Transfer("~/Menu.aspx", false);
                         break;
                     case "つぎへ":
                         {
@@ -245,7 +245,7 @@ namespace WebAppSample.Yontaku
             {
                 logger.WriteException(MethodBase.GetCurrentMethod().Name, ex);
                 // 最初に遷移
-                Server.Transfer("~/Yontaku/Yontaku.aspx", true);
+                Server.Transfer("~/Yontaku/Yontaku.aspx", false);
             }
             finally
             {

@@ -49,7 +49,7 @@ namespace WebAppSample
                 //            {
                 //                UserId = userid,
                 //            };
-                //            Server.Transfer("~/Menu.aspx", true);
+                //            Server.Transfer("~/Menu.aspx", false);
                 //        }
                 //        else
                 //        {
