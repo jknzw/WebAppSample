@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using WebAppLib;
+using WebAppSample.Base;
+using WebAppSample.common;
 using WebAppSample.Yontaku.Logic;
 using WebAppSample.Yontaku.Manager;
 
@@ -15,12 +17,18 @@ namespace WebAppSample.Yontaku
     /// <summary>
     /// 四択問題
     /// </summary>
-    public partial class Yontaku : System.Web.UI.Page
+    public partial class Yontaku : BasePage
     {
         /// <summary>
         /// Logger
         /// </summary>
         private readonly Logger logger = Logger.GetInstance(nameof(Yontaku));
+
+        public Yontaku()
+        {
+            // リダイレクトページ
+            HiddenBasePageRedirectURL.Value = CommonConst.REDIRECT_URL_YONTAKU;
+        }
 
         /// <summary>
         /// ページロード
@@ -159,23 +167,21 @@ namespace WebAppSample.Yontaku
                 // 押下されたボタンのテキストを取得
                 string answer = ((Button)sender).Text;
 
+                if (answer.Equals("おわる"))
+                {
+                    // セッションクリア
+                    SessionRemove();
+
+                    // メニューに遷移
+                    Response.Redirect("~/Menu.aspx", false);
+                    return;
+                }
+
+                // トークンチェック
+                CheckBasePageToken();
+
                 switch (answer)
                 {
-                    case "おわる":
-                        // セッションクリア
-                        SessionRemove();
-
-                        // メニューに遷移
-                        Server.Transfer("~/Menu.aspx", false);
-                        break;
-                    case "つぎへ":
-                        {
-                            string level = HiddenFieldLevel.Value;
-                            string type = HiddenFieldType.Value;
-                            SetMondai(level, type);
-                            PanelKekka.Visible = false;
-                        }
-                        break;
                     case "いちねんせいのかんじ":
                         {
                             string level = "1";
@@ -199,6 +205,14 @@ namespace WebAppSample.Yontaku
                         Button3.Visible = true;
                         Button4.Visible = true;
                         PanelKekka.Visible = false;
+                        break;
+                    case "つぎへ":
+                        {
+                            string level = HiddenFieldLevel.Value;
+                            string type = HiddenFieldType.Value;
+                            SetMondai(level, type);
+                            PanelKekka.Visible = false;
+                        }
                         break;
                     default:
                         // セッションから問題を取得
@@ -245,7 +259,7 @@ namespace WebAppSample.Yontaku
             {
                 logger.WriteException(MethodBase.GetCurrentMethod().Name, ex);
                 // 最初に遷移
-                Server.Transfer("~/Yontaku/Yontaku.aspx", false);
+                Response.Redirect("~/Yontaku/Yontaku.aspx", false);
             }
             finally
             {

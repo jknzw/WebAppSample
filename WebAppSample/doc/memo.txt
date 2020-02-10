@@ -57,3 +57,9 @@ https://qiita.com/kouyan/items/7b8b456b626447a1e24e
 中央寄せ mx-auto https://qiita.com/Fendo181/items/1f32cbbfa676766ae331
 配置 xs sm md lg xl https://qiita.com/akatsuki174/items/53b7367b04ed0b066bbf
 オフセット offset-xs https://webnetamemo.com/coding/bootstrap4/201902227791 ※bootstrap3から変更
+
+--------------------------------------------------
+◆ASP.NET
+・動的にコントロールを追加する https://www.ipentec.com/document/csharp-asp-net-create-simple-dynamic-control
+・二重送信の防止 https://qiita.com/syobochim/items/120109315f671918f28d
+・

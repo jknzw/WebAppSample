@@ -320,7 +320,7 @@ namespace WebAppLib
                                             if (_que.TryTake(out string item, 1 * 1000))
                                             {
                                                 // 書き終わるまで処理を待つ
-                                                Debug.WriteLine(item);
+                                                // 出力確認用 Debug.WriteLine($"[write]{LogFilePath}:{item}");
                                                 await sw.WriteLineAsync(item);
                                             }
                                             else

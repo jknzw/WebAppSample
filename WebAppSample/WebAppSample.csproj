@@ -64,6 +64,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mobile" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -92,6 +93,7 @@
     <Content Include="js\bootstrap.bundle.min.js" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\common.js" />
     <Content Include="js\jquery-3.3.0.js" />
     <Content Include="js\jquery-3.3.0.min.js" />
     <Content Include="Kotsuhi.aspx" />
@@ -108,6 +110,10 @@
     <Content Include="Yontaku\Yontaku.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\BasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="common\CommonConst.cs" />
     <Compile Include="custom\WebFooterControl.ascx.cs">
       <DependentUpon>WebFooterControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

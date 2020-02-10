@@ -56,25 +56,25 @@ namespace WebAppSample
 			switch (((Button)sender).Text)
 			{
 				case "ToDo":
-					Server.Transfer("~/ToDo.aspx", false);
+                    Response.Redirect("~/ToDo.aspx", false);
 					break;
 				case "Web勤怠表":
-					Server.Transfer("~/Kintai.aspx", false);
+                    Response.Redirect("~/Kintai.aspx", false);
 					break;
 				case "交通費精算":
-					Server.Transfer("~/Kotsuhi.aspx", false);
+                    Response.Redirect("~/Kotsuhi.aspx", false);
 					break;
 				case "用語集":
-					Server.Transfer("~/FrmYogoList.aspx", false);
+                    Response.Redirect("~/FrmYogoList.aspx", false);
 					break;
 				case "電卓":
-                    Server.Transfer("~/ToDo.aspx", false);
+                    Response.Redirect("~/ToDo.aspx", false);
                     break;
                 case "四択":
-                    Server.Transfer("~/Yontaku/Yontaku.aspx", false);
+                    Response.Redirect("~/Yontaku/Yontaku.aspx", false);
                     break;
 				default:
-					Server.Transfer("~/Login.aspx", false);
+					Response.Redirect("~/Login.aspx", false);
 					break;
 			}
 		}
