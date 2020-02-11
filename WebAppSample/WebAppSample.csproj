@@ -238,6 +238,10 @@
       <Project>{a5a603ae-712e-4243-bc80-f0bcdf0cd086}</Project>
       <Name>WebAppLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WebCustomControl\WebCustomControl.csproj">
+      <Project>{869d5057-25ca-4dae-b760-6d008a1ba31b}</Project>
+      <Name>WebCustomControl</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

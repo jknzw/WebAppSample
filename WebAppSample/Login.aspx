@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="WebAppSample.Login" %>
 
-<%@ Register Src="~/custom/WebFooterControl.ascx" TagPrefix="uc1" TagName="WebFooterControl" %>
+<%-- <%@ Register TagPrefix="cc1" Namespace="WebCustomControl" Assembly="WebCustomControl" %> --%>
+<%-- <%@ Register Src="~/custom/WebFooterControl.ascx" TagPrefix="uc1" TagName="WebFooterControl" %> --%>
 
 <!DOCTYPE html>
 
@@ -27,7 +28,7 @@
                             <asp:Label ID="LabelPw" runat="server" Text="パスワード"></asp:Label>
                         </td>
                         <td>
-                            <asp:TextBox TextMode="Password" ID="TextBoxPw" runat="server"></asp:TextBox>
+                            <cc1:CPasswordTextBox runat="server" ID="TextBoxPw"></cc1:CPasswordTextBox>
                         </td>
                     </tr>
                     <tr>

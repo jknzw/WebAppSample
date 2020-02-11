@@ -2,34 +2,35 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// アセンブリに関する一般情報は、以下の属性セットによって 
+// アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // 制御されます。アセンブリに関連付けられている情報を変更するには、
-// これらの属性値を変更します。
-[assembly: AssemblyTitle("WebCustomControl")]
+// これらの属性値を変更してください。
+[assembly: AssemblyTitle("CustomControl")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Toshiba")]
-[assembly: AssemblyProduct("WebCustomControl")]
-[assembly: AssemblyCopyright("Copyright © Toshiba 2020")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("CustomControl")]
+[assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// ComVisible を false に設定すると、 
-// COM コンポーネントがこのアセンブリ内のその型を認識できなくなります。
-// COM からこのアセンブリ内の型にアクセスする必要がある場合は、その型の ComVisible 属性を true に設定してください。
+// ComVisible を false に設定すると、このアセンブリ内の型は COM コンポーネントから
+// 参照できなくなります。COM からこのアセンブリ内の型にアクセスする必要がある場合は、
+// その型の ComVisible 属性を true に設定してください。
 [assembly: ComVisible(false)]
 
-// このプロジェクトが COM に公開される場合、次の GUID がタイプ ライブラリの ID になります。
-[assembly: Guid("bf8f9a3a-c0b4-49c7-8747-c7392a1211d1")]
+// このプロジェクトが COM に公開される場合、次の GUID が typelib の ID になります
+[assembly: Guid("869d5057-25ca-4dae-b760-6d008a1ba31b")]
 
 // アセンブリのバージョン情報は、以下の 4 つの値で構成されています:
 //
 //      メジャー バージョン
-//      マイナー バージョン 
+//      マイナー バージョン
 //      ビルド番号
 //      リビジョン
 //
-// すべての値を指定するか、下のように "*" を使ってリビジョンおよびビルド番号を 
+// すべての値を指定するか、次を使用してビルド番号とリビジョン番号を既定に設定できます
 // 既定値にすることができます:
+// [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

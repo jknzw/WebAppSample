@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppMvcSample", "WebAppMvcSample\WebAppMvcSample.csproj", "{C68F4574-ABDD-4C20-BADA-202C772F4C44}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCustomControl", "WebCustomControl\WebCustomControl.csproj", "{869D5057-25CA-4DAE-B760-6D008A1BA31B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,14 @@ Global
 		{C68F4574-ABDD-4C20-BADA-202C772F4C44}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C68F4574-ABDD-4C20-BADA-202C772F4C44}.Release|x86.ActiveCfg = Release|x86
 		{C68F4574-ABDD-4C20-BADA-202C772F4C44}.Release|x86.Build.0 = Release|x86
+		{869D5057-25CA-4DAE-B760-6D008A1BA31B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{869D5057-25CA-4DAE-B760-6D008A1BA31B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{869D5057-25CA-4DAE-B760-6D008A1BA31B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{869D5057-25CA-4DAE-B760-6D008A1BA31B}.Debug|x86.Build.0 = Debug|Any CPU
+		{869D5057-25CA-4DAE-B760-6D008A1BA31B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{869D5057-25CA-4DAE-B760-6D008A1BA31B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{869D5057-25CA-4DAE-B760-6D008A1BA31B}.Release|x86.ActiveCfg = Release|Any CPU
+		{869D5057-25CA-4DAE-B760-6D008A1BA31B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
