@@ -45,9 +45,9 @@ namespace WebAppLib
         #region フィールド
 
 #if DEBUG
-        private static readonly bool isWriteFile = true;
+        private static readonly bool isBuildModeDebug = true;
 #else
-        private static readonly bool isWriteFile = false;
+        private static readonly bool isBuildModeDebug = false;
 #endif
 
         private readonly Dictionary<string, Stopwatch> dicSw = new Dictionary<string, Stopwatch>();
@@ -304,9 +304,12 @@ namespace WebAppLib
                 {
                     if (_que.Count > 0)
                     {
-                        // キューがある場合
-                        if (isWriteFile)
+                        // 未処理のキューがある場合
+
+                        if (isBuildModeDebug)
                         {
+                            // Debugビルド時
+
                             using (await dicLockObj[LogFilePath].LockAsync())
                             {
                                 // ファイルを開く
@@ -339,11 +342,11 @@ namespace WebAppLib
                         }
                         else
                         {
+                            // Releaseビルド時
                             while (_que.Count > 0)
                             {
                                 if (_que.TryTake(out string item, 1 * 1000))
                                 {
-                                    // 書き終わるまで処理を待つ
                                     Debug.WriteLine(item);
                                 }
                                 else
@@ -408,29 +411,49 @@ namespace WebAppLib
 
                     if (_que.Count > 0)
                     {
-                        using (StreamWriter sw = new StreamWriter(LogFilePath, true))
+                        if(isBuildModeDebug)
                         {
-                            try
+                            // Debugモード
+                            using (StreamWriter sw = new StreamWriter(LogFilePath, true))
                             {
-                                // キューが無くなるまで書き込む
-                                while (_que.Count > 0)
+                                try
                                 {
-                                    if (_que.TryTake(out string item, 1 * 1000))
+                                    // キューが無くなるまで書き込む
+                                    while (_que.Count > 0)
                                     {
-                                        // 書き終わるまで処理を待つ
-                                        Debug.WriteLine(item);
-                                        sw.WriteLine(item);
-                                    }
-                                    else
-                                    {
-                                        Debug.WriteLine("TryTake Error");
-                                        break;
+                                        if (_que.TryTake(out string item, 1 * 1000))
+                                        {
+                                            // 書き終わるまで処理を待つ
+                                            Debug.WriteLine(item);
+                                            sw.WriteLine(item);
+                                        }
+                                        else
+                                        {
+                                            Debug.WriteLine("TryTake Error");
+                                            break;
+                                        }
                                     }
                                 }
+                                catch (Exception ex)
+                                {
+                                    Debug.WriteLine($"[{MethodBase.GetCurrentMethod().Name}][{ex}]");
+                                }
                             }
-                            catch (Exception ex)
+                        }
+                        else
+                        {
+                            // Releaseモード
+                            while (_que.Count > 0)
                             {
-                                Debug.WriteLine($"[{MethodBase.GetCurrentMethod().Name}][{ex}]");
+                                if (_que.TryTake(out string item, 1 * 1000))
+                                {
+                                    Debug.WriteLine(item);
+                                }
+                                else
+                                {
+                                    Debug.WriteLine("TryTake Error");
+                                    break;
+                                }
                             }
                         }
                     }

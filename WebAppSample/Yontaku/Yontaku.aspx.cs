@@ -37,19 +37,29 @@ namespace WebAppSample.Yontaku
         /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            logger.StartMethod(MethodBase.GetCurrentMethod().Name);
-
-            if (IsPostBack)
+            try
             {
-                // ポストバック
-            }
-            else
-            {
-                // 初期表示
-                PageInit();
-            }
+                logger.StartMethod(MethodBase.GetCurrentMethod().Name);
 
-            logger.EndMethod(MethodBase.GetCurrentMethod().Name);
+                if (IsPostBack)
+                {
+                    // ポストバック
+                }
+                else
+                {
+                    // 初期表示
+                    PageInit();
+                }
+            }
+            catch (Exception ex)
+            {
+                LabelMessage.Text = ex.ToString();
+                logger.WriteException(MethodBase.GetCurrentMethod().Name, ex);
+            }
+            finally
+            {
+                logger.EndMethod(MethodBase.GetCurrentMethod().Name);
+            }
         }
 
         /// <summary>
@@ -257,9 +267,9 @@ namespace WebAppSample.Yontaku
             }
             catch (Exception ex)
             {
+                LabelMessage.Text = ex.ToString();
+
                 logger.WriteException(MethodBase.GetCurrentMethod().Name, ex);
-                // 最初に遷移
-                Response.Redirect("~/Yontaku/Yontaku.aspx", false);
             }
             finally
             {
