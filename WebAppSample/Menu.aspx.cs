@@ -13,45 +13,53 @@ namespace WebAppSample
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			if(!IsPostBack)
-			{
-				// 初期表示
-				DataTable dt = new DataTable();
-				dt.Columns.Add("Name");
+            {
+                // 初期表示
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Name");
 
-				DataRow row = dt.NewRow();
-				row["Name"] = "ToDo";
-				dt.Rows.Add(row);
-
-				row = dt.NewRow();
-				row["Name"] = "Web勤怠表";
-				dt.Rows.Add(row);
-
-				row = dt.NewRow();
-				row["Name"] = "交通費精算";
-				dt.Rows.Add(row);
-
-				row = dt.NewRow();
-				row["Name"] = "用語集";
-				dt.Rows.Add(row);
-
-				row = dt.NewRow();
-				row["Name"] = "ログアウト";
-				dt.Rows.Add(row);
-
-                row = dt.NewRow();
-                row["Name"] = "四択";
+                DataRow row = dt.NewRow();
+                row["Name"] = "ToDo";
                 dt.Rows.Add(row);
 
+                row = dt.NewRow();
+                row["Name"] = "Web勤怠表";
+                dt.Rows.Add(row);
+
+                row = dt.NewRow();
+                row["Name"] = "交通費精算";
+                dt.Rows.Add(row);
+
+                row = dt.NewRow();
+                row["Name"] = "用語集";
+                dt.Rows.Add(row);
+
+                row = dt.NewRow();
+                row["Name"] = "ログアウト";
+                dt.Rows.Add(row);
+
+                AddRedirectButton(dt, "四択");
+                AddRedirectButton(dt, "サンプルテーブル");
+                AddRedirectButton(dt, "Vue.js");
+                AddRedirectButton(dt, "位置情報");
+
                 Repeater1.DataSource = dt;
-				Repeater1.DataBind();
-			}
-			else
+                Repeater1.DataBind();
+            }
+            else
 			{
 				// postback
 			}
 		}
 
-		protected void Button1_Click(object sender, EventArgs e)
+        private void AddRedirectButton(DataTable dt,string name)
+        {
+            DataRow row = dt.NewRow();
+            row["Name"] = name;
+            dt.Rows.Add(row);
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
 		{
 			switch (((Button)sender).Text)
 			{
@@ -73,7 +81,16 @@ namespace WebAppSample
                 case "四択":
                     Response.Redirect("~/Yontaku/Yontaku.aspx", false);
                     break;
-				default:
+                case "サンプルテーブル":
+                    Response.Redirect("~/Sample/SampleTable.aspx", false);
+                    break;
+                case "Vue.js":
+                    Response.Redirect("~/Sample/VueTest.aspx", false);
+                    break;
+                case "位置情報":
+                    Response.Redirect("~/Sample/GeoApiTest.aspx", false);
+                    break;
+                default:
 					Response.Redirect("~/Login.aspx", false);
 					break;
 			}

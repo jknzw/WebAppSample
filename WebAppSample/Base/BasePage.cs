@@ -48,8 +48,9 @@ namespace WebAppSample.Base
 
             logger.WriteLog(MethodBase.GetCurrentMethod().Name, $"cToken[{clientToken}]", $"sToken[{serverToken}]");
 
-            if (serverToken.Equals(clientToken))
+            if (!string.IsNullOrEmpty(serverToken) && !string.IsNullOrEmpty(clientToken) && clientToken.Equals(serverToken))
             {
+                // クライアント＆サーバートークンが存在し、トークンが一致する場合
                 // トークンチェック成功
 
                 // 新規トークンの作成 
