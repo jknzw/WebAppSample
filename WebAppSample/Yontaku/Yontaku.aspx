@@ -11,6 +11,7 @@
     <link href="../css/bootstrap.css" rel="stylesheet" />
     <link href="css/Yontaku.css" rel="stylesheet" />
     <script src="../js/common.js"></script>
+    <script src="js/Yontaku.js"></script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -25,10 +26,10 @@
                 </div>
             </div>
             <div class="row">
-                <asp:Button CssClass="col-lg-6 col-xs-12 btn-sticky font-answer red" ID="Button1" runat="server" Text="1" OnClientClick="this.disabled = true;" UseSubmitBehavior="false" OnClick="ButtonAnswer_Click" />
-                <asp:Button CssClass="col-lg-6 col-xs-12 btn-sticky font-answer yellow" ID="Button2" runat="server" Text="2" OnClientClick="this.disabled = true;" UseSubmitBehavior="false" OnClick="ButtonAnswer_Click" />
-                <asp:Button CssClass="col-lg-6 col-xs-12 btn-sticky font-answer green" ID="Button3" runat="server" Text="3" OnClientClick="this.disabled = true;" UseSubmitBehavior="false" OnClick="ButtonAnswer_Click" />
-                <asp:Button CssClass="col-lg-6 col-xs-12 btn-sticky font-answer blue" ID="Button4" runat="server" Text="4" OnClientClick="this.disabled = true;" UseSubmitBehavior="false" OnClick="ButtonAnswer_Click" />
+                <asp:Button CssClass="col-lg-6 col-xs-12 btn-sticky font-answer red" ID="Button1" runat="server" Text="1" OnClientClick="return endCheck(this);" OnClick="ButtonAnswer_Click" />
+                <asp:Button CssClass="col-lg-6 col-xs-12 btn-sticky font-answer yellow" ID="Button2" runat="server" Text="2" OnClientClick="return submitCheck();" OnClick="ButtonAnswer_Click" />
+                <asp:Button CssClass="col-lg-6 col-xs-12 btn-sticky font-answer green" ID="Button3" runat="server" Text="3" OnClientClick="return submitCheck();" OnClick="ButtonAnswer_Click" />
+                <asp:Button CssClass="col-lg-6 col-xs-12 btn-sticky font-answer blue" ID="Button4" runat="server" Text="4" OnClientClick="return submitCheck();" OnClick="ButtonAnswer_Click" />
             </div>
             <asp:HiddenField ID="HiddenFieldLevel" runat="server" />
             <asp:HiddenField ID="HiddenFieldType" runat="server" />

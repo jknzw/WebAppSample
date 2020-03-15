@@ -73,9 +73,9 @@ namespace WebAppSample.Yontaku
             LabelQuestion.Text = "よんたくもんだい";
 
             // ボタンの設定
-            Button1.Text = "いちねんせいのかんじ";
-            Button2.Text = "にねんせいのかんじ";
-            Button3.Visible = false;
+            Button1.Text = "１ねんせいのかんじ";
+            Button2.Text = "１～２ねんせいのかんじ";
+            Button3.Text = "２ねんせいのかんじ";
             Button4.Visible = false;
 
             HiddenFieldOk.Value = "0";
@@ -107,7 +107,7 @@ namespace WebAppSample.Yontaku
         /// </summary>
         /// <param name="lvl"></param>
         /// <param name="type"></param>
-        private void SetMondai(string lvl, string type)
+        private void SetMondai(string lvl, string type, string mode = null)
         {
             logger.StartMethod(MethodBase.GetCurrentMethod().Name);
 
@@ -118,7 +118,7 @@ namespace WebAppSample.Yontaku
             if (!(Session["table"] is DataTable mondaiTable) || mondaiTable.Rows.Count == 0)
             {
                 // 初回 or 全問出題完了時は取得
-                mondaiTable = manager.GetMondai(lvl, type);
+                mondaiTable = manager.GetMondai(lvl, type, mode);
             }
 
             // ランダムに問題を取得
@@ -148,7 +148,7 @@ namespace WebAppSample.Yontaku
             DataTable answersTable = Session["answersTable"] as DataTable;
 
             // ランダムに解答を設定
-            string[] answers = logic.GetAnswerTexts(mondaiRow, lvl, type, ref answersTable);
+            string[] answers = logic.GetAnswerTexts(mondaiRow, lvl, type, mode, ref answersTable);
             Button1.Text = answers[0];
             Button2.Text = answers[1];
             Button3.Text = answers[2];
@@ -192,19 +192,19 @@ namespace WebAppSample.Yontaku
 
                 switch (answer)
                 {
-                    case "いちねんせいのかんじ":
+                    case "１ねんせいのかんじ":
                         {
                             string level = "1";
                             string type = "かき";
+                            string mode = "一致";
                             HiddenFieldType.Value = type;
                             HiddenFieldLevel.Value = level;
-                            SetMondai(level, type);
+                            SetMondai(level, type, mode);
                         }
-                        Button3.Visible = true;
                         Button4.Visible = true;
                         PanelKekka.Visible = false;
                         break;
-                    case "にねんせいのかんじ":
+                    case "１～２ねんせいのかんじ":
                         {
                             string level = "2";
                             string type = "かき";
@@ -212,7 +212,18 @@ namespace WebAppSample.Yontaku
                             HiddenFieldLevel.Value = level;
                             SetMondai(level, type);
                         }
-                        Button3.Visible = true;
+                        Button4.Visible = true;
+                        PanelKekka.Visible = false;
+                        break;
+                    case "２ねんせいのかんじ":
+                        {
+                            string level = "2";
+                            string type = "かき";
+                            string mode = "一致";
+                            HiddenFieldType.Value = type;
+                            HiddenFieldLevel.Value = level;
+                            SetMondai(level, type, mode);
+                        }
                         Button4.Visible = true;
                         PanelKekka.Visible = false;
                         break;

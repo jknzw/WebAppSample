@@ -109,6 +109,7 @@
     <Content Include="Web.config" />
     <Content Include="Kintai.aspx" />
     <Content Include="Yontaku\css\Yontaku.css" />
+    <Content Include="Yontaku\js\Yontaku.js" />
     <Content Include="Yontaku\Yontaku.aspx" />
   </ItemGroup>
   <ItemGroup>
@@ -240,7 +241,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="log\" />
     <Folder Include="Models\" />
-    <Folder Include="Yontaku\js\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebAppLib\WebAppLib.csproj">

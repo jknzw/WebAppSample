@@ -92,7 +92,7 @@ namespace WebAppSample.Yontaku.Logic
         /// <param name="lvl"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        internal string[] GetAnswerTexts(DataRow mondaiRow, string lvl, string type, ref DataTable answersTable)
+        internal string[] GetAnswerTexts(DataRow mondaiRow, string lvl, string type,string mode, ref DataTable answersTable)
         {
             // 解答と候補の取得
             string answer = mondaiRow["answer"] as string;
@@ -107,7 +107,7 @@ namespace WebAppSample.Yontaku.Logic
 
                     // 解答候補を取得
                     YontakuSqlManager manager = new YontakuSqlManager();
-                    answersTable = manager.GetAnswers(lvl, type);
+                    answersTable = manager.GetAnswers(lvl, type, mode);
                 }
 
                 // ランダム解答候補を並べ替え
